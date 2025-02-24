@@ -1,5 +1,5 @@
 import { View, Text } from "@/src/components/Themed";
-import LoginForm from '@/src/components/LoginForm';
+import LoginForm from '@/src/components/forms/LoginForm';
 import { StyleSheet, Platform } from 'react-native';
 
 export default function LoginScreen() {
