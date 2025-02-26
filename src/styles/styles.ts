@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const MainStyles = StyleSheet.create({
   textInput: {
@@ -6,7 +6,7 @@ const MainStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     borderWidth: 1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width:0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4
   },
@@ -36,7 +36,7 @@ const MainStyles = StyleSheet.create({
     color: "#a61414",
     fontSize: 12,
     position: "absolute",
-    top:0 ,
+    top:0
   },
   inputContainer: {
     position: "relative"

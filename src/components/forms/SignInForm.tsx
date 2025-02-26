@@ -2,8 +2,8 @@ import { StyleSheet, TouchableOpacity, Platform, Pressable } from "react-native"
 import { Link } from "expo-router";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
 
+import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
 import { LoginUsuarioRequest } from "@/src/types/auth";
 import { View, Text, TextInput } from "../Themed";
 import MainStyles from "@/src/styles/styles";

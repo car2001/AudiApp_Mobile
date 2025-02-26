@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
+    marginTop: 30,
     marginBottom: 10,
   },
   cancelButton: {

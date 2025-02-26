@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
         color: "#5964E8",
         fontSize: 50,
         fontWeight: "bold",
-        textShadowColor: "#5964E8", // Color de la sombra
     },
     containerLogin: {
         flex:1,
