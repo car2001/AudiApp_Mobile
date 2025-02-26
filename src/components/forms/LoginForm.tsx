@@ -1,42 +1,34 @@
-import { TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { View, Text } from "../Themed";
+import { StyleSheet, TouchableOpacity, Platform, Pressable, useColorScheme } from "react-native";
 import { useState } from "react";
+import { Link } from "expo-router";
 
-const LoginForm = () => {
+import { LoginUsuarioRequest } from "@/src/types/auth";
+import { View, Text, TextInput } from "../Themed";
+import CustomButton from "@/src/components/CustomButton"
 
+
+interface LoginFormProps {
+  handleLogin: (credentials: LoginUsuarioRequest) => Promise<void>;
+}
+
+const LoginForm = ({ handleLogin }: LoginFormProps) => {
+
+  const colorScheme = useColorScheme();
+  console.log(colorScheme)
   const [dni, setDni] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
-    console.log(dni);
-    console.log(password);
-    const apiUrl = 'http://localhost:5213/api/Auth/login'; // o la IP de tu máquina local
-
-    // Realizando la solicitud POST
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Asegúrate de que la API acepte JSON
-      },
-      body: JSON.stringify({
-        Dni: dni,       // Enviar el valor de dni
-        Clave: password, // Enviar el valor de password
-      }),
-    })
-    .then((response) => response.json())  // Convertir la respuesta a JSON
-    .then((data) => {
-      console.log('Success:', data);  // Manejar la respuesta exitosa
-    })
-    .catch((error) => {
-      console.error('Error:', error);  // Manejar errores
-    });
+  const handleSubmit = async () => {
+    await handleLogin({ dni, clave: password })
+    setDni('');
+    setPassword('');
   };
 
-  return(
+  return (
     <View style={styles.container}>
       <Text style={styles.title}>Iniciar Sesión</Text>
-      <Text style={styles.text}>Información de Cuenta</Text>
       <TextInput
+        
         value={dni}
         onChangeText={text => setDni(text)}
         style={styles.input}
@@ -52,47 +44,47 @@ const LoginForm = () => {
         onChangeText={text => setPassword(text)}
       />
       <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+      <Link href="/signup" asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <Text 
+              style={[styles.forgotPasswordText,{opacity: pressed ? 0.5: 1}]}>
+                Registrar Nuevo Usuario
+            </Text>
+          )}
+        </Pressable>
+      </Link>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
+
     </View>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F7F7F7",
-    marginHorizontal:15
+    width: Platform.OS === "web" ? "100%" : "auto",
   },
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: "#333",
     marginBottom: 10,
   },
-  text: {
-    color: "#555",
-    fontWeight: "bold",
-    marginVertical: 5,
-  },
   input: {
-    backgroundColor: "#fff",
     marginVertical: 10,
     padding: 15,
-    color: "#333", 
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#ddd",
-    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 4
   },
   button: {
     backgroundColor: "#5964E8",
     alignItems: "center",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     marginVertical: 20,
     elevation: 5,
   },
@@ -103,7 +95,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: "#4CABEB",
-    fontWeight:"bold",
+    fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
   },

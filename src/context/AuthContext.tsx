@@ -1,19 +1,32 @@
-import { createContext, ReactElement, useContext } from "react";
+// import { createContext, ReactElement, useContext, useState } from "react";
 
+// interface AuthProps {
+//     authState?: {token:string| null; authenticated: boolean| null};
+//     onRegister?: (email:string, password:string) => Promise<any>;
+//     onLogin?: (email:string, password:string) => Promise<any>;
+//     onLogout?: () => Promise<any>;
+// }
 
-const AuthContext = createContext<any>(null);
+// const AuthContext = createContext<AuthProps>({});
 
-const AuthProvider = ({children}: {children:ReactElement}) => {
+// const useAuth = () => {
+//     return useContext(AuthContext);
+// }
 
-    const contextData = {};
+// const AuthProvider = ({children}: any) => {
+//     const [authState, setAuthState] = useState<{
+//         token: string || null;
+//         authenticated: boollean| null;
+//     }>({
+//         token: null;
+//         authenticated: null|;
+//     })
 
-    return (
-        <AuthContext.Provider value={contextData}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+//     const contextData = {};
 
-const useAuth = () => {
-    return useContext(AuthContext);
-}
+//     return (
+//         <AuthContext.Provider value={contextData}>
+//             {children}
+//         </AuthContext.Provider>
+//     );
+// }
