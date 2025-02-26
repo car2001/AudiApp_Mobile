@@ -4,14 +4,14 @@ import { Link } from "expo-router";
 
 import { LoginUsuarioRequest } from "@/src/types/auth";
 import { View, Text, TextInput } from "../Themed";
-import CustomButton from "@/src/components/CustomButton"
+import MainStyles from "@/src/styles/styles";
 
 
 interface LoginFormProps {
   handleLogin: (credentials: LoginUsuarioRequest) => Promise<void>;
 }
 
-const LoginForm = ({ handleLogin }: LoginFormProps) => {
+const SignInForm = ({ handleLogin }: LoginFormProps) => {
 
   const colorScheme = useColorScheme();
   console.log(colorScheme)
@@ -28,19 +28,14 @@ const LoginForm = ({ handleLogin }: LoginFormProps) => {
     <View style={styles.container}>
       <Text style={styles.title}>Iniciar Sesión</Text>
       <TextInput
-        
         value={dni}
         onChangeText={text => setDni(text)}
-        style={styles.input}
         placeholder='DNI'
-        placeholderTextColor="#888"
       />
       <TextInput
         value={password}
-        style={styles.input}
         placeholder='Contraseña'
         secureTextEntry
-        placeholderTextColor="#888"
         onChangeText={text => setPassword(text)}
       />
       <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
@@ -54,8 +49,8 @@ const LoginForm = ({ handleLogin }: LoginFormProps) => {
           )}
         </Pressable>
       </Link>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Iniciar Sesión</Text>
+      <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit}>
+        <Text style={MainStyles.mainButtonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
 
     </View>
@@ -71,28 +66,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  input: {
-    marginVertical: 10,
-    padding: 15,
-    borderRadius: 5,
-    borderWidth: 1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4
-  },
-  button: {
-    backgroundColor: "#5964E8",
-    alignItems: "center",
-    padding: 10,
-    borderRadius: 5,
-    marginVertical: 20,
-    elevation: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
   forgotPasswordText: {
     color: "#4CABEB",
     fontWeight: "bold",
@@ -101,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginForm;
+export default SignInForm;

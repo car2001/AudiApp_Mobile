@@ -1,11 +1,9 @@
 import { View, Text } from "@/src/components/Themed"
-import CustomButton from "@/src/components/CustomButton"
+import SignUpForm from "@/src/components/forms/SignUpForm"
 
 
 export default function SignUp(){
     return(
-        <View>
-            <Text>Hola</Text>
-        </View>
+        <SignUpForm/>
     )
 }

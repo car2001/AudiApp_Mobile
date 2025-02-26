@@ -13,6 +13,7 @@ export default {
     backgroundInputColor:"#fff",
     borderInputColor: "#ddd",
     shadowInputColor: "#000",
+    placeholderTextColor:"#888"
   },
   dark: {
     text: '#F7F7F7',
@@ -23,5 +24,6 @@ export default {
     backgroundInputColor:"#1e1f22",
     borderInputColor: "#1e1f22",
     shadowInputColor: "#1e1f22",
+    placeholderTextColor:"#888"
   },
 };

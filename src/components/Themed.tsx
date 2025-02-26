@@ -7,6 +7,7 @@ import { Text as DefaultText, View as DefaultView, TextInput as DefaultTextInput
 
 import Colors from '@/src/constants/Colors';
 import { useColorScheme } from './useColorScheme';
+import MainStyles from '../styles/styles';
 
 type ThemeProps = {
   lightColor?: string;
@@ -51,5 +52,13 @@ export function TextInput(props:TextInputProps){
   const shadowColor = useThemeColor({light: lightColor, dark:darkColor},"shadowInputColor");
   const borderColor = useThemeColor({light: lightColor, dark:darkColor},"borderInputColor");
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-  return <DefaultTextInput style={[{ backgroundColor, shadowColor, borderColor, color }, style]} {...otherProps} />
-}
+  const placeHolderTextColor = useThemeColor({ light: lightColor, dark: darkColor }, 'placeholderTextColor');
+  
+  return (
+    <DefaultTextInput 
+      placeholderTextColor={placeHolderTextColor} 
+      style={[{ backgroundColor, shadowColor, borderColor, color }, MainStyles.textInput, style]} 
+      {...otherProps} 
+    />
+  )
+} 

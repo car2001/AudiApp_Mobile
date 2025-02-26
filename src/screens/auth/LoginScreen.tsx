@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { router } from 'expo-router';
 
 import { View, Text } from "@/src/components/Themed";
-import LoginForm from '@/src/components/forms/LoginForm';
+import SignInForm from '@/src/components/forms/SignInForm';
 import { LoginUsuarioRequest } from "@/src/types/auth";
 import loginService from "@/src/services/login";
 import Message from '@/src/components/Message';
@@ -47,7 +47,7 @@ export default function LoginScreen() {
             </View>
             <View style={styles.containerLogin}>
                 <Message message={message} isError={isError} onClose={handleCloseMessage} />
-                <LoginForm handleLogin={handleLogin} />
+                <SignInForm handleLogin={handleLogin} />
             </View>
         </View>
     )
