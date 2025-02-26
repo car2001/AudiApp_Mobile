@@ -1,60 +1,118 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { TextInput, View, Text } from "../Themed";
+import { SignUpScehema, signUpScehema } from "@/src/lib/forms/signUpValidationSchema";
 import MainStyles from "@/src/styles/styles";
+import CustomTextInput from "@/src/components/CustomTextInput";
 
 export default function SignUpForm () {
 
-    const handleSubmit = () => {
+  const {control, handleSubmit, reset, formState:{errors}} = useForm<SignUpScehema>({
+    resolver: zodResolver(signUpScehema)
+  });
 
-    }
+  const onSubmit = (data:SignUpScehema) => {
+    // router.navigate("/+not-found")
+    console.log(data);
+  }
 
-    return(
-        <View style={styles.container}>
-            <Text style={styles.title}>Registrar un Usuario</Text>
-            <TextInput
-                placeholder="Nombres"
-            />
-            <TextInput
-                placeholder="Apellidos"
-            />
-            <TextInput
-                placeholder="Teléfono"
-            />
-            <TextInput
-                placeholder="DNI (Usuario de Acceso)"
-            />
-            <TextInput
-                placeholder="Contraseña"
-                secureTextEntry
-            />
-            <TextInput
-                placeholder="Confirmar Contraseña"
-                secureTextEntry
-            />
-            <View style={{ flexDirection: "row", justifyContent:"space-evenly", gap: 20, } }>
-                <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit}>
-                    <Text style={MainStyles.mainButtonText}>Registrarse</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit}>
-                    <Text style={MainStyles.mainButtonText}>Cancelar</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    )
+  return(
+    <View style={styles.container}>
+      <Text style={styles.title}>Registrar un Usuario</Text>
+      <Controller
+        control={control}
+        name="nombre"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="Nombres"
+            value={value}
+            errors={errors?.nombre}
+            onChangeText={onChange}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="apellidos"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="Apellidos"
+            value={value}
+            errors={errors?.apellidos}
+            onChangeText={onChange}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="telefono"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="Teléfono"
+            value={value}
+            errors={errors?.telefono}
+            onChangeText={onChange}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="dni"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="DNI (Usuario de Acceso)"
+            value={value}
+            errors={errors?.dni}
+            onChangeText={onChange}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="password"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="Contraseña"
+            value={value}
+            errors={errors?.password}
+            onChangeText={onChange}
+            secureTextEntry
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="passwordConfirm"
+        render={({field:{onChange, value}})=> (
+          <CustomTextInput 
+            placeholder="Confirmar Contraseña"
+            value={value}
+            errors={errors?.passwordConfirm}
+            onChangeText={onChange}
+            secureTextEntry
+          />
+        )}
+      />
+      <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit(onSubmit)}>
+          <Text style={MainStyles.mainButtonText}>Registrarse</Text>
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignContent:"center",
-        alignSelf:"center",
-        justifyContent:"center"
-    },
-    title: {
-        fontSize: 40,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        padding: 10
-    }
+  container: {
+    flex: 1,
+    alignSelf:"center",
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  cancelButton: {
+    
+  }
 });

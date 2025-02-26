@@ -1,12 +1,12 @@
 export interface LoginUsuarioRequest {
-    dni: string;
-    clave: string;
+  dni: string;
+  password: string;
 }
 
 export interface LoginResponse {
-    token: string;
-    user: {
-      id: number;
-      name: string;
-    };
+  token: string;
+  user: {
+    id: number;
+    name: string;
+  };
 }

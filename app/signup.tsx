@@ -1,9 +1,7 @@
-import { View, Text } from "@/src/components/Themed"
-import SignUpForm from "@/src/components/forms/SignUpForm"
-
+import SignUpScreen from "@/src/screens/auth/SignUpScreen"
 
 export default function SignUp(){
     return(
-        <SignUpForm/>
+        <SignUpScreen/>
     )
 }

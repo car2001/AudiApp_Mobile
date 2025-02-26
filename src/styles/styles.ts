@@ -23,6 +23,24 @@ const MainStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  messageText: {
+    fontSize: 14,
+    textAlign: "justify",
+  },
+  errorMessageContainer: {
+    position: "relative",
+    paddingBottom:10,
+    paddingTop:5
+  },
+  errorMessage: {
+    color: "#a61414",
+    fontSize: 12,
+    position: "absolute",
+    top:0 ,
+  },
+  inputContainer: {
+    position: "relative"
+  }
 });
 
 export default MainStyles;
