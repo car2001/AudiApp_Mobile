@@ -10,3 +10,8 @@ export interface LoginResponse {
     name: string;
   };
 }
+
+export interface CreateUsuarioRequest {
+  dni: string;
+  password: string;
+}
