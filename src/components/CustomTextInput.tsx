@@ -1,7 +1,10 @@
 import { FieldError } from "react-hook-form";
 
-import { View, TextInput, Text, TextInputProps } from "./Themed"
-import MainStyles from "../styles/styles"
+import { View, TextInput, Text, TextError } from "./Themed"
+import PasswordInput from "./PasswordInput";
+import { useColorScheme } from './useColorScheme';
+import MainStyles from "../styles/styles";
+import Colors from "../constants/Colors";
 
 type CustomTextInputProps = {
 	placeholder: string;
@@ -18,23 +21,37 @@ const CustomTextInput = ({
 	onChangeText,
 	secureTextEntry = false,
 }: CustomTextInputProps) => {
+
+  const theme = useColorScheme() ?? 'light';
+  const errorColor = Colors[theme]["errorColor"];
+  const borderInputColor = Colors[theme]["borderInputColor"];
+
   return(
     <View>
-			<Text></Text>
-      <TextInput
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
+		<Text></Text>
+		{!secureTextEntry ? (
+			<TextInput
+				value={value}
+				onChangeText={onChangeText}
+				placeholder={placeholder}
 				secureTextEntry={secureTextEntry}
-        style={{borderColor: errors ? "#a61414": "transparent"}}
-      />
-      {!!errors?.message && (
-				<View style={MainStyles.errorMessageContainer}>
-					<Text style={MainStyles.errorMessage}>
-          	{errors?.message}
-        	</Text>
-				</View>
-      )}
+				style={{borderColor: errors ? errorColor: borderInputColor}}
+			/>
+		): (
+			<PasswordInput
+				value={value}
+				onChangeText={onChangeText}
+				placeholder={placeholder}
+				style={{borderColor: errors ? errorColor: borderInputColor}}
+			/>
+		)}
+		{!!errors?.message && (
+			<View style={MainStyles.errorMessageContainer}>
+				<TextError>
+					{errors?.message}
+				</TextError>
+			</View>
+		)}
     </View>
   )
 }

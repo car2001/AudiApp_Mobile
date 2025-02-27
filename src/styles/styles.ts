@@ -1,10 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
+import Colors from "../constants/Colors";
 
 const MainStyles = StyleSheet.create({
   textInput: {
-    marginVertical: 10,
+    marginVertical: Platform.OS === "web" ? 10 : 5,
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 15,
     borderWidth: 1,
     shadowOffset: {width:0, height: 2},
     shadowOpacity: 0.1,
@@ -14,7 +15,7 @@ const MainStyles = StyleSheet.create({
     backgroundColor: "#5964E8",
     alignItems: "center",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 25,
     marginVertical: 20,
     elevation: 5,
   },
@@ -33,10 +34,10 @@ const MainStyles = StyleSheet.create({
     paddingTop:5
   },
   errorMessage: {
-    color: "#a61414",
     fontSize: 12,
     position: "absolute",
-    top:0
+    top:0,
+    left:10
   },
   inputContainer: {
     position: "relative"
