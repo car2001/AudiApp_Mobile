@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { View, Text } from "@/src/components/Themed";
 import SignInForm from '@/src/components/forms/SignInForm';
 import { LoginUsuarioRequest } from "@/src/types/auth";
-import loginService from "@/src/services/login";
+import loginService from "@/src/services/auth/login";
 import Message from '@/src/components/Message';
 
 export default function LoginScreen() {
@@ -33,11 +33,6 @@ export default function LoginScreen() {
         }
     };
 
-    const handleCloseMessage = () => {
-        setMessage(""); // Ocultar mensaje
-    };
-
-
     return (
         <View style={styles.container}>
             <View style={styles.containerLogo}>
@@ -46,7 +41,7 @@ export default function LoginScreen() {
                 </Text>
             </View>
             <View style={styles.containerLogin}>
-                <Message message={message} isError={isError} onClose={handleCloseMessage} />
+                <Message message={message} isError={isError} onClose={() => setMessage("")} />
                 <SignInForm handleLogin={handleLogin} />
             </View>
         </View>

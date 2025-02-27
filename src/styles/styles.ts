@@ -1,12 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
-import Colors from "../constants/Colors";
 
 const MainStyles = StyleSheet.create({
   textInput: {
-    marginVertical: Platform.OS === "web" ? 10 : 5,
-    padding: 15,
-    borderRadius: 15,
-    borderWidth: 1,
+    marginBottom: 0,
+    padding: 12,
+    borderRadius: 5,
+    borderWidth: 2,
     shadowOffset: {width:0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4
@@ -15,14 +14,14 @@ const MainStyles = StyleSheet.create({
     backgroundColor: "#5964E8",
     alignItems: "center",
     padding: 10,
-    borderRadius: 25,
-    marginVertical: 20,
+    borderRadius: 15,
+    marginVertical: 10,
     elevation: 5,
   },
   mainButtonText: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
   },
   messageText: {
     fontSize: 14,
@@ -36,8 +35,7 @@ const MainStyles = StyleSheet.create({
   errorMessage: {
     fontSize: 12,
     position: "absolute",
-    top:0,
-    left:10
+    top:0
   },
   inputContainer: {
     position: "relative"

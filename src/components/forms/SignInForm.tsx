@@ -5,10 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
 import { LoginUsuarioRequest } from "@/src/types/auth";
-import { View, Text, TextInput } from "../Themed";
+import { View, Text } from "../Themed";
 import MainStyles from "@/src/styles/styles";
 import CustomTextInput from "../CustomTextInput";
-import PasswordInput from "../PasswordInput";
 
 
 interface LoginFormProps {
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: "#4CABEB",
-    fontWeight: "bold",
+    fontWeight: "600",
     textAlign: "center",
     marginVertical: 10,
   },

@@ -1,4 +1,5 @@
 import { FieldError } from "react-hook-form";
+import { StyleSheet } from "react-native";
 
 import { View, TextInput, Text, TextError } from "./Themed"
 import PasswordInput from "./PasswordInput";
@@ -22,26 +23,31 @@ const CustomTextInput = ({
 	secureTextEntry = false,
 }: CustomTextInputProps) => {
 
+
+
   const theme = useColorScheme() ?? 'light';
   const errorColor = Colors[theme]["errorColor"];
   const borderInputColor = Colors[theme]["borderInputColor"];
+  const labelColor = Colors[theme]["labelColor"];
 
   return(
-    <View>
-		<Text></Text>
+    <View style={styles.container}>
+		<Text style={[styles.label, {color: labelColor}]}>
+			{placeholder}:
+		</Text>
 		{!secureTextEntry ? (
 			<TextInput
-				value={value}
+				value={value || ""}
 				onChangeText={onChangeText}
-				placeholder={placeholder}
+				// placeholder={placeholder}
 				secureTextEntry={secureTextEntry}
 				style={{borderColor: errors ? errorColor: borderInputColor}}
 			/>
 		): (
 			<PasswordInput
-				value={value}
+				value={value || ""}
 				onChangeText={onChangeText}
-				placeholder={placeholder}
+				// placeholder={placeholder}
 				style={{borderColor: errors ? errorColor: borderInputColor}}
 			/>
 		)}
@@ -55,5 +61,22 @@ const CustomTextInput = ({
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+	container: {
+		position: "relative",
+		paddingBottom:8,
+		paddingTop: 10,
+		marginBottom: 15,
+		marginTop: 5
+	},
+	label: {
+		position: "absolute",
+		left: 4,
+		top: -6,
+		fontSize: 12,
+		fontWeight: "bold",
+	}
+});
 
 export default CustomTextInput

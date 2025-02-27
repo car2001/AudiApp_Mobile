@@ -10,7 +10,7 @@ const PasswordInput = ({
     onChangeText,
     style
 }:{
-    placeholder:string;
+    placeholder?:string;
     value: string;
     onChangeText: (...event: any[]) => void;
     style?: StyleProp<TextStyle>

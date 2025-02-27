@@ -9,12 +9,13 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
     primaryColor: "#5964E8",
-    secondaryColor: "#4CABEB",
+    secondaryColor: "4CABEB",
     backgroundInputColor:"#fff",
     borderInputColor: "#ddd",
     shadowInputColor: "#000",
     placeholderTextColor:"#888",
-    errorColor:"#a61414"
+    errorColor:"#f35369",
+    labelColor: "#333"
   },
   dark: {
     text: '#F7F7F7',
@@ -23,9 +24,10 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
     backgroundInputColor:"#111216",
-    borderInputColor: "#ddd ",
-    shadowInputColor: "#fff",
+    borderInputColor: "#1e1f22",
+    shadowInputColor: "#1e1f22",
     placeholderTextColor:"#888",
-    errorColor:"#a61414"
+    errorColor:"#f35369",
+    labelColor: "#888"
   },
 };

@@ -1,6 +1,6 @@
-import config from "../utils/config";
-import { LoginUsuarioRequest } from "../types/auth";
-import { RESULT_TYPES } from "../constants/ResulTypesConstants";
+import config from "../../utils/config";
+import { LoginUsuarioRequest } from "../../types/auth";
+import { RESULT_TYPES } from "../../constants/ResulTypesConstants";
 
 const login = async (credentials: LoginUsuarioRequest) => {
     try 
@@ -11,14 +11,18 @@ const login = async (credentials: LoginUsuarioRequest) => {
             body: JSON.stringify(credentials)
         });
         const data = await response.json();
-        console.log(data);
         if(!response.ok){
             if(data?.resultType === RESULT_TYPES.ERROR){
                 throw new Error(data?.error?.message)
             }
+            if(data?.message){
+                throw new Error(data?.message);
+            }
+        }
+        else{
+            return data;
         }
         
-        return data;
     }
     catch(error)
     {
@@ -27,4 +31,4 @@ const login = async (credentials: LoginUsuarioRequest) => {
     }
 }
 
-export default {login}
+export default { login }

@@ -25,8 +25,9 @@ const styles = StyleSheet.create({
     position: "relative",
     padding: 15,
     borderRadius: 8,
-    marginTop: 10,
+    marginTop: 5,
     maxWidth: 350,
+    alignSelf:"center"
   },
   messageText: {
     fontSize: 14,

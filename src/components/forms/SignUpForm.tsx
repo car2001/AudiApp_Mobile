@@ -2,25 +2,41 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { TextInput, View, Text } from "../Themed";
+import { View, Text } from "../Themed";
 import { SignUpScehema, signUpScehema } from "@/src/lib/forms/signUpValidationSchema";
 import MainStyles from "@/src/styles/styles";
 import CustomTextInput from "@/src/components/CustomTextInput";
+import { CreateUsuarioRequest } from "@/src/types/auth";
 
-export default function SignUpForm () {
+interface SignUpFormProps {
+  handleRegister: (usuario: CreateUsuarioRequest) => Promise<boolean>;
+}
+
+export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
 
   const {control, handleSubmit, reset, formState:{errors}} = useForm<SignUpScehema>({
     resolver: zodResolver(signUpScehema)
   });
 
-  const onSubmit = (data:SignUpScehema) => {
-    // router.navigate("/+not-found")
-    console.log(data);
+  const handleReset = () => {
+    reset({
+      nombre: "",
+      apellidos: "",
+      telefono:"",
+      dni: "",
+      password:"",
+      passwordConfirm:""
+    })
+  }
+
+  const onSubmit = async (data:SignUpScehema) => {
+      const isSuccess = await handleRegister(data);
+      if(isSuccess) handleReset();
   }
 
   return(
     <View style={styles.container}>
-      <Text style={styles.title}>Registrar un Usuario</Text>
+      <Text style={styles.title}>Registrar Usuario</Text>
       <Controller
         control={control}
         name="nombre"
@@ -110,8 +126,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    marginTop: 30,
     marginBottom: 10,
+    paddingHorizontal: 30
   },
   cancelButton: {
     

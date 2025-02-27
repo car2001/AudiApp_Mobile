@@ -12,6 +12,10 @@ export interface LoginResponse {
 }
 
 export interface CreateUsuarioRequest {
+  nombre:string
+  apellidos:string
+  telefono: string,
   dni: string;
   password: string;
+  passwordConfirm: string
 }
