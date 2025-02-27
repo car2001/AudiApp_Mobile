@@ -8,6 +8,7 @@ import { LoginUsuarioRequest } from "@/src/types/auth";
 import { View, Text, TextInput } from "../Themed";
 import MainStyles from "@/src/styles/styles";
 import CustomTextInput from "../CustomTextInput";
+import PasswordInput from "../PasswordInput";
 
 
 interface LoginFormProps {
@@ -56,9 +57,11 @@ const SignInForm = ({ handleLogin }: LoginFormProps) => {
             value={value}
             errors={errors?.password}
             onChangeText={onChange}
+            secureTextEntry
           />
         )}
       />
+      {/* <PasswordInput /> */}
       <Text style={[styles.forgotPasswordText, {marginTop: 10}]}>¿Olvidaste tu contraseña?</Text>
       <Link href="/signup" asChild>
         <Pressable onPress={()=> handleReset()} >
@@ -86,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
+    paddingHorizontal: 50
   },
   forgotPasswordText: {
     color: "#4CABEB",

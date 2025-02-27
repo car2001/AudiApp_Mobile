@@ -74,4 +74,11 @@ export function TextInput(props:TextInputProps){
       {...otherProps} 
     />
   )
-} 
+}
+
+export function TextError(props: TextProps){
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'errorColor');
+  console.log(color)
+  return <DefaultText style={[{ color }, MainStyles.errorMessage]} {...otherProps}/>
+}
