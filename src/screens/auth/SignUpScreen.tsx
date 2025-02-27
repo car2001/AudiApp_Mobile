@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Stack } from "expo-router";
+import { Stack , router} from "expo-router";
 import { useState } from "react";
 
 import { ScrollView, View } from "@/src/components/Themed";
@@ -18,9 +18,10 @@ const SignUpScreen = () => {
         try
         {
             const oResponse = await registerService.register(usuario);
-            if(oResponse?.data){
+            if (oResponse?.data){
                 const {isSuccess} = oResponse.data;
                 isSuccessRegister = isSuccess;
+                router.navigate("/two");   
             }
         }
         catch(exception: any)

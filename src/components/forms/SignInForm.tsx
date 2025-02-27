@@ -1,7 +1,8 @@
-import { StyleSheet, TouchableOpacity, Platform, Pressable } from "react-native";
+import { StyleSheet, TouchableOpacity, Platform, Pressable, ActivityIndicator } from "react-native";
 import { Link } from "expo-router";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react";
 
 import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
 import { LoginUsuarioRequest } from "@/src/types/auth";
@@ -11,11 +12,12 @@ import CustomTextInput from "../CustomTextInput";
 
 
 interface LoginFormProps {
-  handleLogin: (credentials: LoginUsuarioRequest) => Promise<void>;
+  handleLogin: (credentials: LoginUsuarioRequest) => Promise<boolean>;
 }
 
 const SignInForm = ({ handleLogin }: LoginFormProps) => {
 
+  const [isLoading, setIsLoading] = useState(false);
   const {control, handleSubmit, reset, formState: {errors}} = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
   });
@@ -28,8 +30,10 @@ const SignInForm = ({ handleLogin }: LoginFormProps) => {
   }
 
   const onSubmit = async (data: SignInSchema) => {
-    await handleLogin(data);
-    handleReset();
+    setIsLoading(true);
+    const isSuccess = await handleLogin(data);
+    isSuccess && handleReset();
+    setIsLoading(false); 
   };
 
   return (
@@ -72,8 +76,16 @@ const SignInForm = ({ handleLogin }: LoginFormProps) => {
           )}
         </Pressable>
       </Link>
-      <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit(onSubmit)}>
-        <Text style={MainStyles.mainButtonText}>Iniciar Sesión</Text>
+      <TouchableOpacity 
+        style={MainStyles.mainButton}
+        disabled={isLoading} 
+        onPress={handleSubmit(onSubmit)}>
+        {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={MainStyles.mainButtonText}>Iniciar Sesión</Text>
+          )
+        }
       </TouchableOpacity>
 
     </View>

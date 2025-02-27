@@ -13,12 +13,18 @@ export default function LoginScreen() {
     const [message, setMessage] = useState("")
     const [isError, setIsError] = useState(true);
 
-    const handleLogin = async (credentials: LoginUsuarioRequest) => {
+    const handleLogin = async (credentials: LoginUsuarioRequest): Promise<boolean> => {
+        let isSuccesLogin = false;
         try
         {
             const oResponse = await loginService.login(credentials);
-            console.log(oResponse);
-            router.replace("/two")
+            if(oResponse?.data){
+                const {isSuccess} = oResponse.data;
+                if (isSuccess) {
+                    isSuccesLogin = isSuccess
+                    router.navigate("/two")   
+                }
+            }
         }
         catch(exception: any)
         {
@@ -30,7 +36,11 @@ export default function LoginScreen() {
                 : "Error desconocido. Inténtalo de nuevo.";
             setMessage(errorMessage)
             setIsError(true);
+            setTimeout(() => {
+                setMessage("");
+            },5000)
         }
+        return isSuccesLogin;
     };
 
     return (
