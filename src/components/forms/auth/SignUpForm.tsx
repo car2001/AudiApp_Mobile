@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { View, Text } from "../Themed";
+import { View, Text } from "../../Themed";
 import { SignUpScehema, signUpScehema } from "@/src/lib/forms/signUpValidationSchema";
 import MainStyles from "@/src/styles/styles";
 import CustomTextInput from "@/src/components/CustomTextInput";

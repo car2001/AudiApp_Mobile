@@ -1,7 +1,7 @@
-import EnterpriseForm from "@/src/components/forms/EnterpriseForm"
+import MyEnterpriseScreen from "@/src/screens/auth/MyEnterpriseScreen"
 
 export default function MyEnterprise(){
     return(
-        <EnterpriseForm/>
+        <MyEnterpriseScreen/>
     )
 };

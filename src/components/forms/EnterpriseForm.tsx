@@ -88,31 +88,37 @@ export default function EnterpriseForm(){
                     Configurar Notificaciones de Declaraciones
                 </Text>
                 <View style={styles.containerNotificatons}>
-                    <View style={{width: "60%"}}>
+                    <View style={{width: "50%"}}>
                         <Label label="Primera notificación antes del vencimiento"/>
                     </View>
-                    <CustomTextInput
-                        value=""
-                        onChangeText={()=>{}}
-                    />
+                    <View style={{width: "50%"}}>
+                        <CustomTextInput
+                            value=""
+                            onChangeText={()=>{}}
+                        />
+                    </View>
                 </View>
                 <View style={styles.containerNotificatons}>
-                    <View style={{width: "60%"}}>
+                    <View style={{width: "50%"}}>
                         <Label label="Segunda notificación antes del vencimiento"/>
                     </View>
-                    <CustomTextInput
-                        value=""
-                        onChangeText={()=>{}}
-                    />
+                    <View style={{width: "50%"}}>
+                        <CustomTextInput
+                            value=""
+                            onChangeText={()=>{}}
+                        />
+                    </View>
                 </View>
                 <View style={styles.containerNotificatons}>
-                    <View style={{width: "60%"}}>
+                    <View style={{width: "50%"}}>
                         <Label label="Día despúes de Vencimiento" required/>
                     </View>
-                    <CustomTextInput
-                        value=""
-                        onChangeText={()=>{}}
-                    />
+                    <View style={{width: "50%"}}>
+                        <CustomTextInput
+                            value=""
+                            onChangeText={()=>{}}
+                        />
+                    </View>
                 </View>
             </View>
         </View>
@@ -121,7 +127,7 @@ export default function EnterpriseForm(){
 
 const styles = StyleSheet.create({
     containerForm: {
-        flex: 1,
+        flex:1,
         paddingHorizontal: 20,
         justifyContent:"center",
         alignSelf:"center",
@@ -132,7 +138,6 @@ const styles = StyleSheet.create({
         marginVertical: 15
     },
     container: {
-        flex: 1,
         flexDirection: "row",
         padding : 5,
         justifyContent:"space-between",

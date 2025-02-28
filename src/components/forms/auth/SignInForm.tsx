@@ -6,9 +6,9 @@ import { useState } from "react";
 
 import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
 import { LoginUsuarioRequest } from "@/src/types/auth";
-import { View, Text } from "../Themed";
+import { View, Text } from "../../Themed";
 import MainStyles from "@/src/styles/styles";
-import CustomTextInput from "../CustomTextInput";
+import CustomTextInput from "../../CustomTextInput";
 
 
 interface LoginFormProps {
@@ -44,7 +44,8 @@ const  SignInForm = ({ handleLogin }: LoginFormProps) => {
         name="dni"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="DNI"
+            label="DNI"
+            required
             value={value}
             errors={errors?.dni}
             onChangeText={onChange}
@@ -56,7 +57,8 @@ const  SignInForm = ({ handleLogin }: LoginFormProps) => {
         name="password"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Contraseña"
+            label="Contraseña"
+            required
             value={value}
             errors={errors?.password}
             onChangeText={onChange}
@@ -66,7 +68,7 @@ const  SignInForm = ({ handleLogin }: LoginFormProps) => {
       />
       {/* <PasswordInput /> */}
       <Text style={[styles.forgotPasswordText, {marginTop: 10}]}>¿Olvidaste tu contraseña?</Text>
-      <Link href="/signup" asChild>
+      <Link href="/myEnterprise" asChild>
         <Pressable onPress={()=> handleReset()} >
           {({ pressed }) => (
             <Text 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, StyleSheet, View, StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { Text, View } from './Themed';
 
 type LabelProps = {
   label: string;

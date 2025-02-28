@@ -3,7 +3,7 @@ import { Stack , router} from "expo-router";
 import { useState } from "react";
 
 import { ScrollView, View } from "@/src/components/Themed";
-import SignUpForm from "@/src/components/forms/SignUpForm";
+import SignUpForm from "@/src/components/forms/auth/SignUpForm";
 import { CreateUsuarioRequest } from "@/src/types/auth";
 import registerService from "@/src/services/auth/register";
 import Message from "@/src/components/Message";
