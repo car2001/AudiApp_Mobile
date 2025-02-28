@@ -5,10 +5,12 @@ const MainStyles = StyleSheet.create({
     marginBottom: 0,
     padding: 12,
     borderRadius: 5,
-    borderWidth: 2,
-    shadowOffset: {width:0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 5,
   },
   mainButton: {
     backgroundColor: "#5964E8",

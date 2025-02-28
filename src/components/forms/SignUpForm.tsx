@@ -42,7 +42,8 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="nombre"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Nombres"
+            label="Nombres"
+            required={true}
             value={value}
             errors={errors?.nombre}
             onChangeText={onChange}
@@ -54,7 +55,8 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="apellidos"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Apellidos"
+            label="Apellidos"
+            required={true}
             value={value}
             errors={errors?.apellidos}
             onChangeText={onChange}
@@ -66,7 +68,8 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="telefono"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Teléfono"
+            label="Teléfono"
+            required={true}
             value={value}
             errors={errors?.telefono}
             onChangeText={onChange}
@@ -78,8 +81,9 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="dni"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="DNI (Usuario de Acceso)"
+            label="DNI (Usuario de Acceso)"
             value={value}
+            required={true}
             errors={errors?.dni}
             onChangeText={onChange}
           />
@@ -90,8 +94,9 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="password"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Contraseña"
+            label="Contraseña"
             value={value}
+            required={true}
             errors={errors?.password}
             onChangeText={onChange}
             secureTextEntry
@@ -103,8 +108,9 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         name="passwordConfirm"
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
-            placeholder="Confirmar Contraseña"
+            label="Confirmar Contraseña"
             value={value}
+            required={true}
             errors={errors?.passwordConfirm}
             onChangeText={onChange}
             secureTextEntry
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf:"center",
+    width:"100%"
   },
   title: {
     fontSize: 40,

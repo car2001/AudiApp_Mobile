@@ -15,7 +15,11 @@ export default {
     shadowInputColor: "#000",
     placeholderTextColor:"#888",
     errorColor:"#f35369",
-    labelColor: "#333"
+    labelColor: "#333",
+    backgroundCheckBoxColor: '#fff',
+    activeCheckBoxColor: '#5964E8',
+    textCheckBoxColor: '#333',
+    iconCheckBoxColor: '#64748b',
   },
   dark: {
     text: '#F7F7F7',
@@ -28,6 +32,10 @@ export default {
     shadowInputColor: "#1e1f22",
     placeholderTextColor:"#888",
     errorColor:"#f35369",
-    labelColor: "#888"
+    labelColor: "#888",
+    backgroundCheckBoxColor: '#111216',
+    activeCheckBoxColor: '#4F5DFF',
+    textCheckBoxColor: '#f0f0f0',
+    iconCheckBoxColor: '#b0b0b0',
   },
 };

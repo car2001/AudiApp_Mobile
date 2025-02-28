@@ -61,7 +61,6 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
         alignItems: Platform.OS === "web" ? "center": undefined,
     },
     containerLogo: {
@@ -75,9 +74,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     containerLogin: {
-        flex:1,
-        borderRadius: 20,
-        height: "auto",
-        marginHorizontal:15
+        flex: 1,
+        marginHorizontal:15,
     }
 });

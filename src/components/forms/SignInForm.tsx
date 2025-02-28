@@ -15,7 +15,7 @@ interface LoginFormProps {
   handleLogin: (credentials: LoginUsuarioRequest) => Promise<boolean>;
 }
 
-const SignInForm = ({ handleLogin }: LoginFormProps) => {
+const  SignInForm = ({ handleLogin }: LoginFormProps) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const {control, handleSubmit, reset, formState: {errors}} = useForm<SignInSchema>({
@@ -94,6 +94,7 @@ const SignInForm = ({ handleLogin }: LoginFormProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: Platform.OS === "web" ? "100%" : "auto",
   },
   title: {

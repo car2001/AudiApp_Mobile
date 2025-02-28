@@ -2,10 +2,17 @@ import { StyleSheet, Button, Switch } from "react-native";
 import { useState } from "react";
 
 import { View, Text, TextInput } from "../Themed";
+import CustomTextInput from "../CustomTextInput";
+import CheckBox from "../CheckBox";
+import MainStyles from "@/src/styles/styles";
+import CustomButton from "../CustomButton";
+import Label from "../Label";
 
 export default function EnterpriseForm(){
 
     const [isEnabled, setIsEnabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [declarations, setDeclarations] = useState<string[]>([]);
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -17,48 +24,95 @@ export default function EnterpriseForm(){
                     Información de Empresa
                 </Text>
                 <View style={styles.container}>
-                    <TextInput></TextInput>
-                    <TextInput></TextInput>
-                </View>
-                <View style={styles.container}>
-                    <TextInput></TextInput>
-                    <TextInput></TextInput>
-                </View>
-                <View style={styles.container}>
-                    <TextInput></TextInput>
-                </View>
-                <View style={styles.container}>
-                    <Button title="Validar acceso a SUNAT" />
-                    <Switch
-                        onValueChange={toggleSwitch}
-                        value={isEnabled}
+                    <CustomTextInput
+                        label="Usuario SUNAT"
+                        value=""
+                        onChangeText={()=>{}}
+                        required={true}
+                        styleContainer={styles.inputContainer}
+                    />
+                    <CustomTextInput
+                        label="Clave SUNAT"
+                        value=""
+                        onChangeText={()=>{}}
+                        required={true}
+                        styleContainer={styles.inputContainer}
                     />
                 </View>
+                <View style={styles.container}>
+                    <CustomTextInput 
+                        label="RUC"
+                        value=""
+                        onChangeText={()=>{}}
+                        required={true}
+                        styleContainer={styles.inputContainer}
+                    />
+                    <CustomTextInput 
+                        label="Razón Social"
+                        value=""
+                        onChangeText={()=>{}}
+                        required={true}
+                        styleContainer={styles.inputContainer}
+                    />
+                </View>
+                <CustomTextInput 
+                    label="Correo Electrónico"
+                    value=""
+                    onChangeText={()=>{}}
+                    required={true}
+                />
+                <CustomButton
+                    isLoading={isLoading}
+                    onPress={() => {}}
+                    text="Validar acceso a SUNAT"
+                    styleButton={[MainStyles.mainButton]}
+                    styleButtonText={MainStyles.mainButtonText}
+                />
             </View>
-            {/* Select declarations to monitor */}
             <View>
                 <Text style={styles.subtitle}>
                     Seleccionar Declaraciones a Monitorear
                 </Text>
-                <Text>PLANILLA ELECTRÓNICA</Text>
-                <Text>PDT IGV-RENTA MENSUAL-IEV</Text>
+                <CheckBox
+                    options={[
+                        {label: "PLANILLA ELECTRÓNICA", value: "PLANILLA ELECTRÓNICA"},
+                        {label: "PDT IGV-RENTA MENSUAL-IEV", value: "PDT IGV-RENTA MENSUAL-IEV"}
+                    ]}
+                    checkedValues={declarations}
+                    onChange={setDeclarations}
+                />
             </View>
             {/* Set up notifications of declarations */}
             <View>
                 <Text style={styles.subtitle}>
                     Configurar Notificaciones de Declaraciones
                 </Text>
-                <View style={styles.container}>
-                    <Text>Primera notificación antes del vencimiento</Text>
-                    <TextInput></TextInput>
+                <View style={styles.containerNotificatons}>
+                    <View style={{width: "60%"}}>
+                        <Label label="Primera notificación antes del vencimiento"/>
+                    </View>
+                    <CustomTextInput
+                        value=""
+                        onChangeText={()=>{}}
+                    />
                 </View>
-                <View style={styles.container}>
-                    <Text>Segunda notificación antes del vencimiento</Text>
-                    <TextInput></TextInput>
+                <View style={styles.containerNotificatons}>
+                    <View style={{width: "60%"}}>
+                        <Label label="Segunda notificación antes del vencimiento"/>
+                    </View>
+                    <CustomTextInput
+                        value=""
+                        onChangeText={()=>{}}
+                    />
                 </View>
-                <View style={styles.container}>
-                    <Text>Día despúes de Vencimiento *</Text>
-                    <TextInput></TextInput>
+                <View style={styles.containerNotificatons}>
+                    <View style={{width: "60%"}}>
+                        <Label label="Día despúes de Vencimiento" required/>
+                    </View>
+                    <CustomTextInput
+                        value=""
+                        onChangeText={()=>{}}
+                    />
                 </View>
             </View>
         </View>
@@ -68,19 +122,28 @@ export default function EnterpriseForm(){
 const styles = StyleSheet.create({
     containerForm: {
         flex: 1,
-        padding: 20,
+        paddingHorizontal: 20,
         justifyContent:"center",
-        // alignItems:"center"
+        alignSelf:"center",
     },
     subtitle: {
         fontSize: 14,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginVertical: 15
     },
     container: {
-        flex:1, 
-        backgroundColor:"red",
+        flex: 1,
         flexDirection: "row",
+        padding : 5,
         justifyContent:"space-between",
-        padding: 10
+    },
+    containerNotificatons: {
+        flexDirection: "row",
+        padding : 5,
+        gap: 10,
+        alignItems:"center",
+    },
+    inputContainer: {
+        width: "48%",
     }
 })

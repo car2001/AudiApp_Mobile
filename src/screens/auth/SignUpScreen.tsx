@@ -45,7 +45,7 @@ const SignUpScreen = () => {
         <>
             <Stack.Screen options={{ title: '' }} />
             <ScrollView style={styles.screen}>
-                <View style={{ flex: 1, marginTop: 30 }}>
+                <View style={{ flex: 1, marginTop: 30, alignSelf:"center" }}>
                     <Message message={message} isError={isError} onClose={() => setMessage("")} />
                     <SignUpForm handleRegister={handleRegister}/>
                 </View>

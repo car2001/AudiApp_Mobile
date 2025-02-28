@@ -1,29 +1,36 @@
 import { FieldError } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, StyleProp, TextStyle } from "react-native";
 
 import { View, TextInput, Text, TextError } from "./Themed"
 import PasswordInput from "./PasswordInput";
 import { useColorScheme } from './useColorScheme';
 import MainStyles from "../styles/styles";
 import Colors from "../constants/Colors";
+import Label from "./Label";
 
 type CustomTextInputProps = {
-	placeholder: string;
+	label?: string;
+	placeholder?:string;
 	value: string;
+	required?: boolean;
 	errors?: FieldError;
 	onChangeText: (...event: any[]) => void;
 	secureTextEntry?: boolean;
+	styleInput?: StyleProp<TextStyle>;
+	styleContainer?: object;
 }
 
 const CustomTextInput = ({
+	label,
 	placeholder,
 	value,
+	required = false,
 	errors,
 	onChangeText,
 	secureTextEntry = false,
+	styleInput,
+	styleContainer,
 }: CustomTextInputProps) => {
-
-
 
   const theme = useColorScheme() ?? 'light';
   const errorColor = Colors[theme]["errorColor"];
@@ -31,24 +38,29 @@ const CustomTextInput = ({
   const labelColor = Colors[theme]["labelColor"];
 
   return(
-    <View style={styles.container}>
-		<Text style={[styles.label, {color: labelColor}]}>
-			{placeholder}:
-		</Text>
+	<View style={[styles.container, styleContainer]}>
+		{label ? 
+			(
+				<Label 
+					label={label}
+					style={[styles.label, {color: labelColor}]} 
+					required={required}
+				/>
+			) : null}
 		{!secureTextEntry ? (
 			<TextInput
-				value={value || ""}
-				onChangeText={onChangeText}
-				// placeholder={placeholder}
-				secureTextEntry={secureTextEntry}
-				style={{borderColor: errors ? errorColor: borderInputColor}}
+			value={value || ""}
+			onChangeText={onChangeText}
+			placeholder={placeholder}
+			secureTextEntry={secureTextEntry}
+			style={[{borderColor: errors ? errorColor: borderInputColor}, styleInput]}
 			/>
 		): (
 			<PasswordInput
 				value={value || ""}
 				onChangeText={onChangeText}
-				// placeholder={placeholder}
-				style={{borderColor: errors ? errorColor: borderInputColor}}
+				placeholder={placeholder}
+				style={[{borderColor: errors ? errorColor: borderInputColor}, styleInput]}
 			/>
 		)}
 		{!!errors?.message && (
@@ -67,15 +79,15 @@ const styles = StyleSheet.create({
 		position: "relative",
 		paddingBottom:8,
 		paddingTop: 10,
-		marginBottom: 15,
-		marginTop: 5
+		marginBottom: 5,
+		marginTop: 5,
 	},
 	label: {
 		position: "absolute",
 		left: 4,
 		top: -6,
 		fontSize: 12,
-		fontWeight: "bold",
+		fontWeight: "600",
 	}
 });
 
