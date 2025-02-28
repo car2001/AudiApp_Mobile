@@ -7,6 +7,7 @@ import CheckBox from "../CheckBox";
 import MainStyles from "@/src/styles/styles";
 import CustomButton from "../CustomButton";
 import Label from "../Label";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function EnterpriseForm(){
 
@@ -67,7 +68,12 @@ export default function EnterpriseForm(){
                     text="Validar acceso a SUNAT"
                     styleButton={[MainStyles.mainButton]}
                     styleButtonText={MainStyles.mainButtonText}
-                />
+                >
+                    <MaterialCommunityIcons 
+                        name="connection" 
+                        size={16} 
+                    />
+                </CustomButton>
             </View>
             <View>
                 <Text style={styles.subtitle}>
@@ -95,6 +101,7 @@ export default function EnterpriseForm(){
                         <CustomTextInput
                             value=""
                             onChangeText={()=>{}}
+                            placeholder="Nro. de días"
                         />
                     </View>
                 </View>
@@ -106,6 +113,7 @@ export default function EnterpriseForm(){
                         <CustomTextInput
                             value=""
                             onChangeText={()=>{}}
+                            placeholder="Nro. de días"
                         />
                     </View>
                 </View>
@@ -117,9 +125,17 @@ export default function EnterpriseForm(){
                         <CustomTextInput
                             value=""
                             onChangeText={()=>{}}
+                            placeholder="Nro. de días"
                         />
                     </View>
                 </View>
+                <CustomButton
+                    isLoading={isLoading}
+                    onPress={() => {}}
+                    text="Guardar"
+                    styleButton={[MainStyles.mainButton, {marginBottom: 15}]}
+                    styleButtonText={MainStyles.mainButtonText}
+                />
             </View>
         </View>
     )
