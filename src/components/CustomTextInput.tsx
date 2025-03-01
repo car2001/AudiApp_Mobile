@@ -37,6 +37,14 @@ const CustomTextInput = ({
   const borderInputColor = Colors[theme]["borderInputColor"];
   const labelColor = Colors[theme]["labelColor"];
 
+  
+//   const handleChange = (text: string) => {
+//     // Validación: solo permitir números y el punto decimal
+//     if (/^\d*\.?\d*$/.test(text)) {
+//       onChangeText(text);  // Llama a onChange de React Hook Form
+//     }
+//   };
+
   return(
 	<View style={[styles.container, styleContainer]}>
 		{label ? 
@@ -52,6 +60,9 @@ const CustomTextInput = ({
 			value={value || ""}
 			onChangeText={onChangeText}
 			placeholder={placeholder}
+			// editable={false}
+			// onKeyPress={handleKeyPress}
+			// keyboardType="numeric"
 			secureTextEntry={secureTextEntry}
 			style={[{borderColor: errors ? errorColor: borderInputColor}, styleInput]}
 			/>

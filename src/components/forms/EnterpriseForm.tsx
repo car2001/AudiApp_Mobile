@@ -1,7 +1,9 @@
-import { StyleSheet, Button, Switch } from "react-native";
+import { StyleSheet } from "react-native";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { View, Text, TextInput } from "../Themed";
+import { View, Text } from "../Themed";
 import CustomTextInput from "../CustomTextInput";
 import CheckBox from "../CheckBox";
 import MainStyles from "@/src/styles/styles";
@@ -119,7 +121,7 @@ export default function EnterpriseForm(){
                 </View>
                 <View style={styles.containerNotificatons}>
                     <View style={{width: "50%"}}>
-                        <Label label="Día despúes de Vencimiento" required/>
+                        <Label label="Día despúes de vencimiento" required/>
                     </View>
                     <View style={{width: "50%"}}>
                         <CustomTextInput

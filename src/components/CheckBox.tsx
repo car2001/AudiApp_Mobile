@@ -29,10 +29,11 @@ export default function CheckBox ({options, checkedValues, onChange, style}: Che
 
     return (
         <View style={[styles.container, style]}>
-            {options.map((option) => {
+            {options.map((option, index) => {
                 let active = updatedCheckedValues.includes(option.value);
                 return (
                     <TouchableOpacity
+                        key={index}
                         style={[
                             styles.checkBox,
                             active ? { backgroundColor: activeColor } : { backgroundColor: backgroundColor }
