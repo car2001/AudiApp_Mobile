@@ -3,7 +3,7 @@ import registerService from "../services/auth/register";
 import loginService from "../services/auth/login";
 import { CreateUsuarioRequest, LoginUsuarioRequest } from "../types/auth";
 import * as SecureStore from "expo-secure-store";
-import { setToken, getToken, removeToken } from "../utils/storage";
+import { setItem, getItem, removeItem } from "../utils/storage";
 
 interface AuthProps {
     authState: {token:string| null; authenticated: boolean| null};
@@ -32,6 +32,20 @@ export const AuthProvider = ({children}: any) => {
         authenticated: null
     });
 
+    useEffect(() => {
+        const loadAuthState = async () => {
+        const storedToken = await getItem("authToken");
+        if (storedToken) {
+            setAuthState({
+            token: storedToken,
+            authenticated: true,
+            });
+        }
+        };
+
+        loadAuthState();
+    }, []);
+
     const register= async(usuario: CreateUsuarioRequest) => {
         return await registerService.register(usuario);
     };
@@ -45,13 +59,13 @@ export const AuthProvider = ({children}: any) => {
         });
 
         // await SecureStore.setItemAsync("authToken", response.data.token);
-        await setToken(response.data.token);
+        await setItem("authToken",response.data.token);
         return response;
     }
 
     const logout = async () => {
         await SecureStore.deleteItemAsync("authToken");
-        await removeToken();
+        await removeItem("authToken");
         setAuthState({
             token: null,
             authenticated: false
