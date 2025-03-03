@@ -64,6 +64,9 @@ function RootLayoutNav() {
           name="(tabs)"
           options={{headerShown: false}}
         />
+        <Stack.Screen 
+          name="(dashboard)" 
+          options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

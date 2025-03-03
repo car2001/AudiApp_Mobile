@@ -22,7 +22,7 @@ export default function LoginScreen() {
                 const {isSuccess} = oResponse.data;
                 if (isSuccess) {
                     isSuccesLogin = isSuccess
-                    router.navigate("/two")   
+                    router.navigate("/home")   
                 }
             }
         }
