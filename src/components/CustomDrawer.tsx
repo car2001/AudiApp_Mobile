@@ -8,23 +8,14 @@ const CustomDrawer = (props: any) => {
     <View style={styles.container}>
       <DrawerContentScrollView 
         {...props} 
-        contentContainerStyle={{ padding:0}}>
+        contentContainerStyle={{ padding:0, backgroundColor: "#5964E8"}}>
         
         {/* Sección del usuario */}
-        <ImageBackground 
-          source={require('@/assets/images/menu-bg.jpeg')} 
-          style={styles.backgroundImage} 
-          resizeMode="cover"
-        >
-          <View style={styles.profileContainer}>
-            <Image source={require('@/assets/images/user-profile.jpg')} style={styles.profileImage} />
-            <Text style={styles.profileName}>John Doe</Text>
-            <View style={styles.coinContainer}>
-              <Text style={styles.coinText}>280 Coins</Text>
-              <Ionicons name="wallet" size={16} color="#FFD700" style={{ marginLeft: 5 }} />
-            </View>
-          </View>
-        </ImageBackground>
+        <View style={styles.profileContainer}>
+          <Image source={require('@/assets/images/user-profile.jpg')} style={styles.profileImage} />
+          <Text style={styles.profileName}>John Doe</Text>
+        </View>
+
 
         {/* Sección del Menú */}
         <View style={styles.drawerItemsContainer}>
@@ -36,10 +27,9 @@ const CustomDrawer = (props: any) => {
       {/* Botón de Cerrar Sesión */}
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => {}} style={styles.logoutButton}>
-          <Ionicons name="exit-outline" size={22} color="#8200d6" />
+          <Ionicons name="exit-outline" size={22} color="#5964E8" />
           <Text style={styles.logoutText}>Sign Out</Text>
         </TouchableOpacity>
-        <DrawerItem label={'Logout'} onPress={() => {}} />
       </View>
     </View>
   );
@@ -51,19 +41,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  drawerScroll: {
-    backgroundColor: '#8200d6',
-    padding: 0
-  },
-  backgroundImage: {
-    height: 200, // Ajusta la altura para que no se expanda innecesariamente
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
   profileContainer: {
+    height: 200,
     alignItems: 'center',
-    paddingVertical: 15,
+    justifyContent: 'center',
   },
   profileImage: {
     height: 80,
@@ -78,15 +59,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 8,
-  },
-  coinContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 5,
-  },
-  coinText: {
-    color: '#FFD700',
-    fontWeight: '600',
   },
   drawerItemsContainer: {
     flex: 1,
@@ -110,7 +82,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#8200d6',
+    color: '#5964E8',
     marginLeft: 8,
   },
 });

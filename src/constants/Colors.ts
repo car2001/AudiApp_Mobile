@@ -8,8 +8,6 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
-    primaryColor: "#5964E8",
-    secondaryColor: "4CABEB",
     backgroundInputColor:"#fff",
     borderInputColor: "#ddd",
     shadowInputColor: "#000",
@@ -20,6 +18,9 @@ export default {
     activeCheckBoxColor: '#5964E8',
     textCheckBoxColor: '#333',
     iconCheckBoxColor: '#64748b',
+    drawerActiveBackgroungColor: "#5964E8",
+    drawerInactiveTintColor: "#333",
+    drawerActiveTintColor: "#F7F7F7"
   },
   dark: {
     text: '#F7F7F7',
@@ -37,5 +38,8 @@ export default {
     activeCheckBoxColor: '#4F5DFF',
     textCheckBoxColor: '#f0f0f0',
     iconCheckBoxColor: '#b0b0b0',
+    drawerActiveBackgroungColor: "#5964E8",
+    drawerInactiveTintColor: "#333",
+    drawerActiveTintColor: "#F7F7F7"
   },
 };

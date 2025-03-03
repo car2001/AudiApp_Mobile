@@ -1,32 +1,73 @@
-// import { createContext, ReactElement, useContext, useState } from "react";
+import { createContext, ReactElement, useContext, useEffect, useState } from "react";
+import registerService from "../services/auth/register";
+import loginService from "../services/auth/login";
+import { CreateUsuarioRequest, LoginUsuarioRequest } from "../types/auth";
+import * as SecureStore from "expo-secure-store";
+import { setToken, getToken, removeToken } from "../utils/storage";
 
-// interface AuthProps {
-//     authState?: {token:string| null; authenticated: boolean| null};
-//     onRegister?: (email:string, password:string) => Promise<any>;
-//     onLogin?: (email:string, password:string) => Promise<any>;
-//     onLogout?: () => Promise<any>;
-// }
+interface AuthProps {
+    authState: {token:string| null; authenticated: boolean| null};
+    onRegister: (usuario: CreateUsuarioRequest) => Promise<any>;
+    onLogin: (credentials: LoginUsuarioRequest) => Promise<any>;
+    onLogout: () => Promise<any>;
+}
 
-// const AuthContext = createContext<AuthProps>({});
+const AuthContext = createContext<AuthProps>({
+    onLogin: () => Promise.resolve(),
+    onRegister: async () => {},
+    onLogout: async () => {},
+    authState: { token: null, authenticated: null }
+});
 
-// const useAuth = () => {
-//     return useContext(AuthContext);
-// }
+export const useAuth = () => {
+    return useContext(AuthContext);
+}
 
-// const AuthProvider = ({children}: any) => {
-//     const [authState, setAuthState] = useState<{
-//         token: string || null;
-//         authenticated: boollean| null;
-//     }>({
-//         token: null;
-//         authenticated: null|;
-//     })
+export const AuthProvider = ({children}: any) => {
+    const [authState, setAuthState] = useState<{
+        token: string | null;
+        authenticated: boolean| null;
+    }>({
+        token: null,
+        authenticated: null
+    });
 
-//     const contextData = {};
+    const register= async(usuario: CreateUsuarioRequest) => {
+        return await registerService.register(usuario);
+    };
 
-//     return (
-//         <AuthContext.Provider value={contextData}>
-//             {children}
-//         </AuthContext.Provider>
-//     );
-// }
+    const login = async (credentials: LoginUsuarioRequest) => {
+        const response = await loginService.login(credentials);
+        console.log(response);
+        setAuthState({
+            token: response.data.token,
+            authenticated: response.data.isSuccess
+        });
+
+        // await SecureStore.setItemAsync("authToken", response.data.token);
+        await setToken(response.data.token);
+        return response;
+    }
+
+    const logout = async () => {
+        await SecureStore.deleteItemAsync("authToken");
+        await removeToken();
+        setAuthState({
+            token: null,
+            authenticated: false
+        })
+    }
+
+    const value = {
+        onRegister: register,
+        onLogin: login,
+        onLogout: logout,
+        authState
+    };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
+}

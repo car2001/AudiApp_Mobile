@@ -1,12 +1,15 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'; 
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import UserProfileHeader from '@/src/components/UserProfileHeader';
+
 
 import { useColorScheme } from '@/src/components/useColorScheme';
+import { AuthProvider } from '@/src/context/AuthContext';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,7 +45,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
+  );
 }
 
 function RootLayoutNav() {
@@ -50,7 +57,11 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack >
+      <Stack
+        screenOptions={{
+          headerTitleAlign: "center"
+        }}
+      >
         <Stack.Screen
           name="index"
           options={{
@@ -60,6 +71,13 @@ function RootLayoutNav() {
         <Stack.Screen
           name="signup"
         />
+        <Stack.Screen
+          name="myEnterprise"
+          options={{
+            title: "Mi Empresa",
+            headerRight: () => <UserProfileHeader />
+          }}
+        />
         <Stack.Screen 
           name="(tabs)"
           options={{headerShown: false}}
@@ -67,7 +85,7 @@ function RootLayoutNav() {
         <Stack.Screen 
           name="(dashboard)" 
           options={{ headerShown: false }} />
-      </Stack>
+        </Stack>
     </ThemeProvider>
   );
 }

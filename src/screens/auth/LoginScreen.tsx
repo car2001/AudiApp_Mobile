@@ -5,11 +5,13 @@ import { router } from 'expo-router';
 import { View, Text } from "@/src/components/Themed";
 import SignInForm from '@/src/components/forms/auth/SignInForm';
 import { LoginUsuarioRequest } from "@/src/types/auth";
-import loginService from "@/src/services/auth/login";
+// import loginService from "@/src/services/auth/login";
 import Message from '@/src/components/Message';
+import { useAuth } from '@/src/context/AuthContext';
 
 export default function LoginScreen() {
 
+    const {authState, onLogin} = useAuth();
     const [message, setMessage] = useState("")
     const [isError, setIsError] = useState(true);
 
@@ -17,7 +19,7 @@ export default function LoginScreen() {
         let isSuccesLogin = false;
         try
         {
-            const oResponse = await loginService.login(credentials);
+            const oResponse = await onLogin(credentials);
             if(oResponse?.data){
                 const {isSuccess} = oResponse.data;
                 if (isSuccess) {
