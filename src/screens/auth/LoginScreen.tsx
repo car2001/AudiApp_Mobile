@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import { View, Text } from "@/src/components/Themed";
 import SignInForm from '@/src/components/forms/auth/SignInForm';
 import { LoginUsuarioRequest } from "@/src/types/auth";
-// import loginService from "@/src/services/auth/login";
 import Message from '@/src/components/Message';
 import { useAuth } from '@/src/context/AuthContext';
 

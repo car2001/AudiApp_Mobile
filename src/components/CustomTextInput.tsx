@@ -11,8 +11,9 @@ import Label from "./Label";
 type CustomTextInputProps = {
 	label?: string;
 	placeholder?:string;
-	value: string;
+	value?: string;
 	required?: boolean;
+	editable?: boolean;
 	errors?: FieldError;
 	onChangeText: (...event: any[]) => void;
 	secureTextEntry?: boolean;
@@ -25,6 +26,7 @@ const CustomTextInput = ({
 	placeholder,
 	value,
 	required = false,
+	editable= true,
 	errors,
 	onChangeText,
 	secureTextEntry = false,
@@ -60,11 +62,16 @@ const CustomTextInput = ({
 			value={value || ""}
 			onChangeText={onChangeText}
 			placeholder={placeholder}
-			// editable={false}
+			editable={editable}
 			// onKeyPress={handleKeyPress}
 			// keyboardType="numeric"
 			secureTextEntry={secureTextEntry}
-			style={[{borderColor: errors ? errorColor: borderInputColor}, styleInput]}
+			style={[
+				{
+					borderColor: errors ? errorColor: borderInputColor
+				},
+				editable ? styleInput: styles.disabledInput, 
+				styleInput]}
 			/>
 		): (
 			<PasswordInput
@@ -99,6 +106,10 @@ const styles = StyleSheet.create({
 		top: -6,
 		fontSize: 12,
 		fontWeight: "600",
+	},
+	disabledInput: {
+		pointerEvents:"none", 
+		backgroundColor:"#f5f5f5"
 	}
 });
 

@@ -5,11 +5,12 @@ import { useState } from "react";
 import { ScrollView, View } from "@/src/components/Themed";
 import SignUpForm from "@/src/components/forms/auth/SignUpForm";
 import { CreateUsuarioRequest } from "@/src/types/auth";
-import registerService from "@/src/services/auth/register";
 import Message from "@/src/components/Message";
+import { useAuth } from "@/src/context/AuthContext";
 
 const SignUpScreen = () => {
     
+    const {onRegister} = useAuth();
     const [message, setMessage] = useState("")
     const [isError, setIsError] = useState(true);
 
@@ -17,11 +18,13 @@ const SignUpScreen = () => {
         let isSuccessRegister = false;
         try
         {
-            const oResponse = await registerService.register(usuario);
+            const oResponse = await onRegister(usuario);
             if (oResponse?.data){
                 const {isSuccess} = oResponse.data;
                 isSuccessRegister = isSuccess;
-                router.navigate("/two");   
+                if(isSuccessRegister){
+                    router.navigate("/MiEmpresa");   
+                }
             }
         }
         catch(exception: any)

@@ -1,21 +1,40 @@
 import React from 'react';
-import { ImageBackground, Image, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
 
 const CustomDrawer = (props: any) => {
+  const { authState } = useAuth();
+  const userStored = authState?.user;
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView 
         {...props} 
-        contentContainerStyle={{ padding:0, backgroundColor: "#5964E8"}}>
+        contentContainerStyle={{ padding: 0, backgroundColor: "#5964E8" }}>
         
         {/* Sección del usuario */}
         <View style={styles.profileContainer}>
-          <Image source={require('@/assets/images/user-profile.jpg')} style={styles.profileImage} />
-          <Text style={styles.profileName}>John Doe</Text>
-        </View>
+          <Text style={styles.logo}>AUDITA</Text>
 
+          {/* Contenedor de avatar y datos del usuario */}
+          <View style={styles.userData}>
+            <View style={styles.avatarContainer}>
+              <Ionicons name="person-circle" size={70} color="#fff" />
+            </View>
+
+            {/* Datos del usuario */}
+            <View style={styles.userDetails}>
+              <Text style={styles.profileName}>
+                {`${userStored?.nombre} ${userStored?.apellidos}`}
+              </Text>
+              <Text style={styles.profileDNI}>
+                {`DNI: ${userStored?.dni}`}
+              </Text>
+            </View>
+          </View>
+        </View>
 
         {/* Sección del Menú */}
         <View style={styles.drawerItemsContainer}>
@@ -41,32 +60,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  logo: {
+    color: "#f7f7f7",
+    fontWeight: "bold",
+    fontSize: 32,  // Reducido el tamaño del logo para que se vea más equilibrado
+    marginVertical: 20,
+    textAlign: 'center',  // Centrado el logo
+  },
   profileContainer: {
     height: 200,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
-  profileImage: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#fff',
+  userData: {
+    flexDirection: 'row',
+    alignItems: 'center',  // Centrado verticalmente el avatar y texto
+    justifyContent: 'center', // Centrado de forma horizontal
+  },
+  avatarContainer: {
+    marginRight: 15,  // Separación entre el avatar y el texto
+  },
+  userDetails: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   profileName: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#f7f7f7',
+    fontSize: 14,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 8,
+    marginBottom: 5,  // Espacio entre nombre y DNI
+  },
+  profileDNI: {
+    color: '#f7f7f7',
+    fontSize: 12,  // Texto más pequeño para el DNI
   },
   drawerItemsContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f7f7f7',
     paddingTop: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 10 // Para mejorar el diseño
+    padding: 10,  // Para mejorar el diseño
   },
   footer: {
     padding: 15,

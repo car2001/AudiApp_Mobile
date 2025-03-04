@@ -68,7 +68,7 @@ const  SignInForm = ({ handleLogin }: LoginFormProps) => {
       />
       {/* <PasswordInput /> */}
       <Text style={[styles.forgotPasswordText, {marginTop: 10}]}>¿Olvidaste tu contraseña?</Text>
-      <Link href="/myEnterprise" asChild>
+      <Link href="/signup" asChild>
         <Pressable onPress={()=> handleReset()} >
           {({ pressed }) => (
             <Text 

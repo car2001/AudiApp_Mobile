@@ -72,15 +72,10 @@ function RootLayoutNav() {
           name="signup"
         />
         <Stack.Screen
-          name="myEnterprise"
+          name="MiEmpresa"
           options={{
-            title: "Mi Empresa",
-            headerRight: () => <UserProfileHeader />
+            headerShown:false
           }}
-        />
-        <Stack.Screen 
-          name="(tabs)"
-          options={{headerShown: false}}
         />
         <Stack.Screen 
           name="(dashboard)" 

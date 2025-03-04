@@ -14,6 +14,7 @@ export default function Layout() {
 
   const { authState } = useAuth();
   const authenticated = authState?.authenticated;
+  const userStored = authState?.user;
   const theme = useColorScheme() ?? 'light';
   const drawerActiveBackgroungColor = Colors[theme]["drawerActiveBackgroungColor"];
   const drawerInactiveTintColor = Colors[theme]["drawerInactiveTintColor"];
@@ -29,9 +30,9 @@ export default function Layout() {
           drawerActiveBackgroundColor: drawerActiveBackgroungColor,
           drawerActiveTintColor: drawerActiveTintColor,
           drawerInactiveTintColor: drawerInactiveTintColor,
-          headerRight: () => <UserProfileHeader />,
+          headerRight: () => <UserProfileHeader usuario={`${userStored?.nombre} ${userStored?.apellidos}`} />,
         }}
-        drawerContent={props => <CustomDrawer {...props} />}
+        drawerContent={props => <CustomDrawer {...props}/>}
       >
         <Drawer.Screen
           name="home"

@@ -1,8 +1,8 @@
-export const setToken = (key:string,item: string) => {
+export const setItem = (key:string,item: string) => {
     localStorage.setItem(key, item);
 };
 
-export const getToken = (key:string): string | null => {
+export const getItem = (key:string): string | null => {
     return localStorage.getItem(key);
 };
 

@@ -1,18 +1,22 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 import { View, Text } from "../../Themed";
 import { SignUpScehema, signUpScehema } from "@/src/lib/forms/signUpValidationSchema";
 import MainStyles from "@/src/styles/styles";
 import CustomTextInput from "@/src/components/CustomTextInput";
 import { CreateUsuarioRequest } from "@/src/types/auth";
+import CustomButton from "../../CustomButton";
 
 interface SignUpFormProps {
   handleRegister: (usuario: CreateUsuarioRequest) => Promise<boolean>;
 }
 
 export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const {control, handleSubmit, reset, formState:{errors}} = useForm<SignUpScehema>({
     resolver: zodResolver(signUpScehema)
@@ -30,8 +34,10 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
   }
 
   const onSubmit = async (data:SignUpScehema) => {
-      const isSuccess = await handleRegister(data);
-      if(isSuccess) handleReset();
+    setIsLoading(true);
+    const isSuccess = await handleRegister(data);
+    if(isSuccess) handleReset();
+    setIsLoading(false);
   }
 
   return(
@@ -117,9 +123,13 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
           />
         )}
       />
-      <TouchableOpacity style={MainStyles.mainButton} onPress={handleSubmit(onSubmit)}>
-          <Text style={MainStyles.mainButtonText}>Registrarse</Text>
-      </TouchableOpacity>
+      <CustomButton
+        onPress={handleSubmit(onSubmit)}
+        isLoading={isLoading}
+        styleButton={MainStyles.mainButton}
+        styleButtonText={MainStyles.mainButtonText}
+        text="Registrarse"
+      />
     </View>
   )
 }

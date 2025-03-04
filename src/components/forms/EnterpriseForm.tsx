@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { View, Text } from "../Themed";
 import CustomTextInput from "../CustomTextInput";
@@ -9,15 +10,41 @@ import CheckBox from "../CheckBox";
 import MainStyles from "@/src/styles/styles";
 import CustomButton from "../CustomButton";
 import Label from "../Label";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { EnterpriseSchema, enterpiseSchema } from "@/src/lib/forms/enterpriseSchema";
+import { SunatSchema, sunatSchema } from "@/src/lib/forms/sunatSchema"; 
 
 export default function EnterpriseForm(){
 
-    const [isEnabled, setIsEnabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [declarations, setDeclarations] = useState<string[]>([]);
 
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const {
+        control, 
+        handleSubmit, 
+        reset, 
+        formState: {errors}
+    } = useForm<EnterpriseSchema>({
+        resolver: zodResolver(enterpiseSchema)
+    });
+
+    const {
+        control: sunatControl, 
+        handleSubmit: sunatHandleSubmit, 
+        reset: sunatReset, 
+        formState:{errors: sunatErrors }
+    } = useForm<SunatSchema>({
+        resolver: zodResolver(sunatSchema)
+    });
+
+    const onSaveEmpresa = async () => {
+        setIsLoading(true);
+        setIsLoading(false);
+    }
+
+    const onValidateSUNAT = async (data: SunatSchema) => {
+        setIsLoading(true);
+        setIsLoading(false);
+    };
 
     return(
         <View style={styles.containerForm}>
@@ -27,50 +54,83 @@ export default function EnterpriseForm(){
                     Información de Empresa
                 </Text>
                 <View style={styles.container}>
-                    <CustomTextInput
-                        label="Usuario SUNAT"
-                        value=""
-                        onChangeText={()=>{}}
-                        required={true}
-                        styleContainer={styles.inputContainer}
+                    <Controller 
+                        control={sunatControl}
+                        name="usuarioSunat"
+                        render={({field:{onChange, value}}) => (
+                            <CustomTextInput
+                                label="Usuario SUNAT"
+                                value={value}
+                                onChangeText={onChange}
+                                required={true}
+                                styleContainer={styles.inputContainer}
+                                errors={sunatErrors.usuarioSunat}
+                            />
+                        )}
                     />
-                    <CustomTextInput
-                        label="Clave SUNAT"
-                        value=""
-                        onChangeText={()=>{}}
-                        required={true}
-                        styleContainer={styles.inputContainer}
+                    <Controller 
+                        control={sunatControl}
+                        name="claveSunat"
+                        render={({field:{onChange, value}}) => (
+                            <CustomTextInput
+                                label="Clave SUNAT"
+                                value={value}
+                                onChangeText={onChange}
+                                required={true}
+                                styleContainer={styles.inputContainer}
+                                errors={sunatErrors.claveSunat}
+                            />
+                        )}
                     />
                 </View>
                 <View style={styles.container}>
-                    <CustomTextInput 
-                        label="RUC"
-                        value=""
-                        onChangeText={()=>{}}
-                        required={true}
-                        styleContainer={styles.inputContainer}
+                    <Controller 
+                        control={sunatControl}
+                        name="ruc"
+                        render={({field:{onChange, value}}) => (
+                            <CustomTextInput 
+                                label="RUC"
+                                value={value}
+                                onChangeText={onChange}
+                                required={true}
+                                styleContainer={styles.inputContainer}
+                                errors={sunatErrors.ruc}
+                            />
+                        )}
                     />
-                    <CustomTextInput 
-                        label="Razón Social"
-                        value=""
-                        onChangeText={()=>{}}
-                        required={true}
-                        styleContainer={styles.inputContainer}
+                    <Controller 
+                        control={sunatControl}
+                        name="razonSocial"
+                        render={({field:{onChange, value}}) => (
+                            <CustomTextInput 
+                                label="Razón Social"
+                                value={value}
+                                editable={false}
+                                onChangeText={onChange}
+                                styleContainer={styles.inputContainer}
+                            />
+                        )}
                     />
                 </View>
-                <CustomTextInput 
-                    label="Correo Electrónico"
-                    value=""
-                    onChangeText={()=>{}}
-                    required={true}
+                <Controller
+                    control={sunatControl}
+                    name="email"
+                    render={({field:{onChange,value}}) => (
+                        <CustomTextInput 
+                            label="Correo Electrónico"
+                            value={value}
+                            onChangeText={onChange}
+                            required={true}
+                            errors={sunatErrors.email}
+                        />
+                    )}
                 />
                 <CustomButton
                     isLoading={isLoading}
-                    onPress={() => {}}
+                    onPress={sunatHandleSubmit(onValidateSUNAT)}
                     text="Validar acceso a SUNAT"
                     styleButton={[MainStyles.mainButton]}
-                    styleButtonText={MainStyles.mainButtonText}
-                >
+                    styleButtonText={MainStyles.mainButtonText}>
                     <MaterialCommunityIcons 
                         name="connection" 
                         size={16} 
@@ -100,10 +160,17 @@ export default function EnterpriseForm(){
                         <Label label="Primera notificación antes del vencimiento"/>
                     </View>
                     <View style={{width: "50%"}}>
-                        <CustomTextInput
-                            value=""
-                            onChangeText={()=>{}}
-                            placeholder="Nro. de días"
+                        <Controller 
+                            control={control}
+                            name="primera_notificacion_vencimiento"
+                            render={({field:{onChange,value}}) => (
+                                <CustomTextInput
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Nro. de días"
+                                    errors={errors.primera_notificacion_vencimiento}
+                                />
+                            )}
                         />
                     </View>
                 </View>
@@ -112,10 +179,17 @@ export default function EnterpriseForm(){
                         <Label label="Segunda notificación antes del vencimiento"/>
                     </View>
                     <View style={{width: "50%"}}>
-                        <CustomTextInput
-                            value=""
-                            onChangeText={()=>{}}
-                            placeholder="Nro. de días"
+                        <Controller 
+                            control={control}
+                            name="segunda_notificacion_vencimiento"
+                            render={({field:{onChange, value}}) => (
+                                <CustomTextInput
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Nro. de días"
+                                    errors={errors.segunda_notificacion_vencimiento}
+                                />
+                            )}
                         />
                     </View>
                 </View>
@@ -124,16 +198,23 @@ export default function EnterpriseForm(){
                         <Label label="Día despúes de vencimiento" required/>
                     </View>
                     <View style={{width: "50%"}}>
-                        <CustomTextInput
-                            value=""
-                            onChangeText={()=>{}}
-                            placeholder="Nro. de días"
+                        <Controller 
+                            control={control}
+                            name="dia_despues_vencimiento"
+                            render={({field:{onChange,value}})=> (
+                                <CustomTextInput
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Nro. de días"
+                                    errors={errors.dia_despues_vencimiento}
+                                />
+                            )}
                         />
                     </View>
                 </View>
                 <CustomButton
                     isLoading={isLoading}
-                    onPress={() => {}}
+                    onPress={handleSubmit(onSaveEmpresa)}
                     text="Guardar"
                     styleButton={[MainStyles.mainButton, {marginBottom: 15}]}
                     styleButtonText={MainStyles.mainButtonText}

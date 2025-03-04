@@ -1,14 +1,8 @@
+import { UsuarioResponse } from "./user";
+
 export interface LoginUsuarioRequest {
   dni: string;
   password: string;
-}
-
-export interface LoginResponse {
-  token: string;
-  user: {
-    id: number;
-    name: string;
-  };
 }
 
 export interface CreateUsuarioRequest {
@@ -18,4 +12,10 @@ export interface CreateUsuarioRequest {
   dni: string;
   password: string;
   passwordConfirm: string
+}
+
+export interface LoginResponse {
+  token: string;
+  isSuccess: boolean;
+  usuario: UsuarioResponse
 }

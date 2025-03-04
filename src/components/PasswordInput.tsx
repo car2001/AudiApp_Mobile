@@ -8,12 +8,14 @@ const PasswordInput = ({
     placeholder,
     value,
     onChangeText,
-    style
+    style,
+    editable = true
 }:{
     placeholder?:string;
     value: string;
     onChangeText: (...event: any[]) => void;
-    style?: StyleProp<TextStyle>
+    style?: StyleProp<TextStyle>;
+    editable?:boolean;
 }) => {
   const [secureText, setSecureText] = useState(true);
 
@@ -21,6 +23,7 @@ const PasswordInput = ({
     <View style={styles.container}>
       <TextInput
         style={[styles.input, style]}
+        editable={editable}
         secureTextEntry={secureText}
         placeholder={placeholder}
         onChangeText={onChangeText}
