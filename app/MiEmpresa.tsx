@@ -16,7 +16,7 @@ export default function MiEmpresa(){
                 options={{
                     headerShown: true,
                     title: 'Mi Empresa',
-                    headerRight: () => <UserProfileHeader usuario={`${userStored?.nombre} ${userStored?.apellidos}`} />,
+                    headerRight: () => <UserProfileHeader/>,
                     headerLeft: () => <></>
                 }} 
             />

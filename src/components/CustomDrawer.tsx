@@ -21,7 +21,7 @@ const CustomDrawer = (props: any) => {
           {/* Contenedor de avatar y datos del usuario */}
           <View style={styles.userData}>
             <View style={styles.avatarContainer}>
-              <Ionicons name="person-circle" size={70} color="#fff" />
+              <Ionicons name="person-circle" size={70} color="#f7f7f7" />
             </View>
 
             {/* Datos del usuario */}
@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
   logo: {
     color: "#f7f7f7",
     fontWeight: "bold",
-    fontSize: 32,  // Reducido el tamaño del logo para que se vea más equilibrado
+    fontSize: 32,
     marginVertical: 20,
-    textAlign: 'center',  // Centrado el logo
+    textAlign: 'center',
   },
   profileContainer: {
     height: 200,
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
   },
   userData: {
     flexDirection: 'row',
-    alignItems: 'center',  // Centrado verticalmente el avatar y texto
-    justifyContent: 'center', // Centrado de forma horizontal
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarContainer: {
-    marginRight: 15,  // Separación entre el avatar y el texto
+    marginRight: 15,
   },
   userDetails: {
     justifyContent: 'center',
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     color: '#f7f7f7',
     fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 5,  // Espacio entre nombre y DNI
+    marginBottom: 5,
   },
   profileDNI: {
     color: '#f7f7f7',
-    fontSize: 12,  // Texto más pequeño para el DNI
+    fontSize: 12,
   },
   drawerItemsContainer: {
     flex: 1,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 10,  // Para mejorar el diseño
+    padding: 10,
   },
   footer: {
     padding: 15,

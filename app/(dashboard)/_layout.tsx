@@ -30,7 +30,7 @@ export default function Layout() {
           drawerActiveBackgroundColor: drawerActiveBackgroungColor,
           drawerActiveTintColor: drawerActiveTintColor,
           drawerInactiveTintColor: drawerInactiveTintColor,
-          headerRight: () => <UserProfileHeader usuario={`${userStored?.nombre} ${userStored?.apellidos}`} />,
+          headerRight: () => <UserProfileHeader />,
         }}
         drawerContent={props => <CustomDrawer {...props}/>}
       >
