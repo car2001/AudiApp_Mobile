@@ -1,6 +1,6 @@
 import config from "@/src/utils/config"
-import { RESULT_TYPES } from "@/src/constants/ResulTypesConstants"
 import { CreateUsuarioRequest } from "@/src/types/auth";
+import { handleApiError } from "@/src/utils/errorHandler";
 
 const register = async (usuario: CreateUsuarioRequest) => {
     try 
@@ -10,18 +10,18 @@ const register = async (usuario: CreateUsuarioRequest) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(usuario)
         });
+
+        if (!response.ok) {
+            if(response.status === 401)
+            {
+
+            }
+            const errorData = await response.json();
+            handleApiError(errorData); 
+        }
+
         const data = await response.json();
-        if(!response.ok){
-            if(data?.resultType === RESULT_TYPES.ERROR){
-                throw new Error(data?.error?.message)
-            }
-            if(data?.message){
-                throw new Error(data?.message);
-            }
-        }
-        else{
-            return data;
-        }
+        return data;
     }
     catch(error)
     {

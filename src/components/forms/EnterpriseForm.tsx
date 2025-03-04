@@ -12,9 +12,17 @@ import CustomButton from "../CustomButton";
 import Label from "../Label";
 import { EnterpriseSchema, enterpiseSchema } from "@/src/lib/forms/enterpriseSchema";
 import { SunatSchema, sunatSchema } from "@/src/lib/forms/sunatSchema"; 
+import { SunatConnectionRequest } from "@/src/types/enterprise";
+import { useAuth } from "@/src/context/AuthContext";
 
-export default function EnterpriseForm(){
+interface EnterpriseFormProps {
+    handleValidateAccess: ({access, token}: {access:SunatConnectionRequest; token:string;}) => Promise<void>;
+}
 
+export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormProps){
+
+    const { authState } = useAuth();
+    const token = authState.token || "";
     const [isLoading, setIsLoading] = useState(false);
     const [declarations, setDeclarations] = useState<string[]>([]);
 
@@ -41,8 +49,9 @@ export default function EnterpriseForm(){
         setIsLoading(false);
     }
 
-    const onValidateSUNAT = async (data: SunatSchema) => {
+    const onValidateSUNAT = async (access: SunatSchema) => {
         setIsLoading(true);
+        await handleValidateAccess({access:access, token})
         setIsLoading(false);
     };
 
@@ -75,6 +84,7 @@ export default function EnterpriseForm(){
                             <CustomTextInput
                                 label="Clave SUNAT"
                                 value={value}
+                                secureTextEntry
                                 onChangeText={onChange}
                                 required={true}
                                 styleContainer={styles.inputContainer}
@@ -112,19 +122,6 @@ export default function EnterpriseForm(){
                         )}
                     />
                 </View>
-                <Controller
-                    control={sunatControl}
-                    name="email"
-                    render={({field:{onChange,value}}) => (
-                        <CustomTextInput 
-                            label="Correo Electrónico"
-                            value={value}
-                            onChangeText={onChange}
-                            required={true}
-                            errors={sunatErrors.email}
-                        />
-                    )}
-                />
                 <CustomButton
                     isLoading={isLoading}
                     onPress={sunatHandleSubmit(onValidateSUNAT)}
@@ -136,6 +133,19 @@ export default function EnterpriseForm(){
                         size={16} 
                     />
                 </CustomButton>
+                <Controller
+                    control={control}
+                    name="email"
+                    render={({field:{onChange,value}}) => (
+                        <CustomTextInput 
+                            label="Correo Electrónico"
+                            value={value}
+                            onChangeText={onChange}
+                            required={true}
+                            errors={errors.email}
+                        />
+                    )}
+                />
             </View>
             <View>
                 <Text style={styles.subtitle}>

@@ -16,10 +16,7 @@ export const sunatSchema = z.object({
           }),
     razonSocial: z
         .string()
-        .optional(),
-    email: z
-        .string({required_error: "El Correo Electrónico es obligatorio"})
-        .min(1,{message:"El Correo Electrónico es obligatorio"}) 
+        .optional()
 });
 
 export type SunatSchema = z.infer<typeof sunatSchema>

@@ -1,6 +1,6 @@
 import config from "../../utils/config";
 import { LoginUsuarioRequest } from "../../types/auth";
-import { RESULT_TYPES } from "../../constants/ResulTypesConstants";
+import { handleApiError } from "@/src/utils/errorHandler";
 
 const login = async (credentials: LoginUsuarioRequest) => {
     try 
@@ -10,23 +10,19 @@ const login = async (credentials: LoginUsuarioRequest) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(credentials)
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            handleApiError(errorData); 
+        }
+
         const data = await response.json();
-        if(!response.ok){
-            if(data?.resultType === RESULT_TYPES.ERROR){
-                throw new Error(data?.error?.message)
-            }
-            if(data?.message){
-                throw new Error(data?.message);
-            }
-        }
-        else{
-            return data;
-        }
+        return data;
         
     }
     catch(error)
     {
-        console.error("Error login", error);
+        console.error(error);
         throw error;
     }
 }

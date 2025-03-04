@@ -12,7 +12,7 @@ export default function LoginScreen() {
 
     const {authState, onLogin} = useAuth();
     const [message, setMessage] = useState("")
-    const [isError, setIsError] = useState(true);
+    const [isError, setIsError] = useState(false);
 
     const handleLogin = async (credentials: LoginUsuarioRequest): Promise<boolean> => {
         let isSuccesLogin = false;
