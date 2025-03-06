@@ -11,3 +11,14 @@ export const handleApiError = (errorData: any) => {
 
     throw new Error("Ocurrio un error desconocido.");
 };
+
+export const handleError = (exception: unknown) => {
+    const errorMessage =
+        exception instanceof Error
+            ? exception.message
+            : typeof exception === "string"
+            ? exception
+            : "Error desconocido. Inténtalo de nuevo.";
+
+    return errorMessage;
+};

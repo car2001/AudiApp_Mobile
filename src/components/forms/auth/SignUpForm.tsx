@@ -138,13 +138,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf:"center",
-    width:"100%"
+    width:"100%",
   },
   title: {
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
-    paddingHorizontal: 30
+    alignSelf:"center"
   },
   cancelButton: {
     

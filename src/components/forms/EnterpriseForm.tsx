@@ -17,13 +17,16 @@ import { useAuth } from "@/src/context/AuthContext";
 
 interface EnterpriseFormProps {
     handleValidateAccess: ({access, token}: {access:SunatConnectionRequest; token:string;}) => Promise<void>;
+    razonSocial: string;
+    isValidConnection: boolean;
 }
 
-export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormProps){
+export default function EnterpriseForm({handleValidateAccess, razonSocial, isValidConnection}: EnterpriseFormProps){
 
     const { authState } = useAuth();
     const token = authState.token || "";
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingSave, setIsLoadingSave] = useState(false);
+    const [isLoadingValidate, setIsLoadingValidate] = useState(false);
     const [declarations, setDeclarations] = useState<string[]>([]);
 
     const {
@@ -45,14 +48,14 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
     });
 
     const onSaveEmpresa = async () => {
-        setIsLoading(true);
-        setIsLoading(false);
+        setIsLoadingSave(true);
+        setIsLoadingSave(false);
     }
 
     const onValidateSUNAT = async (access: SunatSchema) => {
-        setIsLoading(true);
-        await handleValidateAccess({access:access, token})
-        setIsLoading(false);
+        setIsLoadingValidate(true);
+        await handleValidateAccess({access:access, token});
+        setIsLoadingValidate(false);
     };
 
     return(
@@ -68,6 +71,7 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
                         name="usuarioSunat"
                         render={({field:{onChange, value}}) => (
                             <CustomTextInput
+                                editable={!isValidConnection}
                                 label="Usuario SUNAT"
                                 value={value}
                                 onChangeText={onChange}
@@ -82,6 +86,7 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
                         name="claveSunat"
                         render={({field:{onChange, value}}) => (
                             <CustomTextInput
+                                editable={!isValidConnection}
                                 label="Clave SUNAT"
                                 value={value}
                                 secureTextEntry
@@ -98,7 +103,8 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
                         control={sunatControl}
                         name="ruc"
                         render={({field:{onChange, value}}) => (
-                            <CustomTextInput 
+                            <CustomTextInput
+                                editable={!isValidConnection}
                                 label="RUC"
                                 value={value}
                                 onChangeText={onChange}
@@ -108,22 +114,16 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
                             />
                         )}
                     />
-                    <Controller 
-                        control={sunatControl}
-                        name="razonSocial"
-                        render={({field:{onChange, value}}) => (
-                            <CustomTextInput 
-                                label="Razón Social"
-                                value={value}
-                                editable={false}
-                                onChangeText={onChange}
-                                styleContainer={styles.inputContainer}
-                            />
-                        )}
+                    <CustomTextInput 
+                        label="Razón Social"
+                        value={razonSocial}
+                        editable={false}
+                        styleContainer={styles.inputContainer}
                     />
                 </View>
                 <CustomButton
-                    isLoading={isLoading}
+                    isLoading={isLoadingValidate}
+                    disabled={isValidConnection}
                     onPress={sunatHandleSubmit(onValidateSUNAT)}
                     text="Validar acceso a SUNAT"
                     styleButton={[MainStyles.mainButton]}
@@ -223,7 +223,8 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
                     </View>
                 </View>
                 <CustomButton
-                    isLoading={isLoading}
+                    isLoading={isLoadingSave}
+                    disabled={!isValidConnection}
                     onPress={handleSubmit(onSaveEmpresa)}
                     text="Guardar"
                     styleButton={[MainStyles.mainButton, {marginBottom: 15}]}
@@ -237,9 +238,8 @@ export default function EnterpriseForm({handleValidateAccess}: EnterpriseFormPro
 const styles = StyleSheet.create({
     containerForm: {
         flex:1,
-        paddingHorizontal: 20,
-        justifyContent:"center",
         alignSelf:"center",
+        width: "100%"
     },
     subtitle: {
         fontSize: 14,

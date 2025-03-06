@@ -30,6 +30,7 @@ const PasswordInput = ({
         value={value}
       />
       <TouchableOpacity
+        disabled={!editable}
         onPress={() => setSecureText(!secureText)}
         style={styles.icon}
         accessibilityLabel="Mostrar u ocultar contraseña"
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingRight: 40,
+    width:"90%"
   },
   icon: {
     position: "absolute",

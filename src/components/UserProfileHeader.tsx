@@ -59,7 +59,7 @@ export default function UserProfileHeader() {
 
             {/* Opciones dentro del modal */}
             <ScrollView style={styles.optionsContainer}>
-              <TouchableOpacity onPress={handleProfile} style={styles.optionButton}>
+              {/* <TouchableOpacity onPress={handleProfile} style={styles.optionButton}>
                 <Text style={styles.optionText}>Ver Perfil</Text>
               </TouchableOpacity>
 
@@ -69,7 +69,7 @@ export default function UserProfileHeader() {
 
               <TouchableOpacity onPress={handleAccountSettings} style={styles.optionButton}>
                 <Text style={styles.optionText}>Configuración de Cuenta</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <TouchableOpacity onPress={handleLogout} style={[styles.optionButton, styles.logoutButton]}>
                 <Text style={styles.optionText}>Cerrar Sesión</Text>

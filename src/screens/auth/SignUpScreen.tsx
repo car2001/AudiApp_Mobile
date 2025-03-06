@@ -48,7 +48,7 @@ const SignUpScreen = () => {
         <>
             <Stack.Screen options={{ title: '' }} />
             <ScrollView style={styles.screen}>
-                <View style={{ flex: 1, marginTop: 30, alignSelf:"center" }}>
+                <View style={styles.containerRegister}>
                     <Message message={message} isError={isError} onClose={() => setMessage("")} />
                     <SignUpForm handleRegister={handleRegister}/>
                 </View>
@@ -60,6 +60,13 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+    },
+    containerRegister: {
+        width: "90%",
+        maxWidth: 500,
+        flex: 1, 
+        marginTop: 30, 
+        alignSelf:"center"
     }
 });
 

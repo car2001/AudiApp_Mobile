@@ -1,21 +1,25 @@
 import React, { Children } from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, StyleProp, TextStyle } from 'react-native';
-import MainStyles from '../styles/styles';
 
 type Props = {
   text: string;
   onPress: () => void;
   isLoading: boolean;
+  disabled?: boolean;
   styleButton?: StyleProp<TextStyle>;
   styleButtonText?: StyleProp<TextStyle>;
   children?: React.ReactNode;
 };
 
-export default function CustomButton({ text, onPress, isLoading, styleButton, styleButtonText, children }: Props) {
+export default function CustomButton({ text, onPress, isLoading, styleButton, styleButtonText, children, disabled }: Props) {
   return (
     <TouchableOpacity
-      style={[styles.button,styleButton]}
-      disabled={isLoading}
+      style={[
+        styles.button,
+        styleButton,
+        (isLoading || disabled) && { opacity: 0.6 }
+      ]}
+      disabled={isLoading || disabled}
       onPress={onPress}
     >
       {isLoading ? (

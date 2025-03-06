@@ -2,8 +2,6 @@ import { createContext, ReactElement, useContext, useEffect, useState } from "re
 import registerService from "../services/auth/register";
 import loginService from "../services/auth/login";
 import { CreateUsuarioRequest, LoginUsuarioRequest } from "../types/auth";
-import * as SecureStore from "expo-secure-store";
-// import { setItem, getItem, removeItem } from "../utils/storage";
 import { setItem, getItem, removeItem } from "../utils/storage";
 import { UsuarioResponse } from "../types/user";
 
@@ -40,16 +38,15 @@ export const AuthProvider = ({children}: any) => {
 
     useEffect(() => {
         const loadAuthState = async () => {
-        const storedToken = await getItem("authToken");
-        const storedUser = await getItem("user");
-        console.log(storedToken)
-        if (storedToken && storedUser) {
-            setAuthState({
-                token: storedToken,
-                authenticated: true,
-                user: JSON.parse(storedUser)
-            });
-        }
+            const storedToken = await getItem("authToken");
+            const storedUser = await getItem("user");
+            if (storedToken && storedUser) {
+                setAuthState({
+                    token: storedToken,
+                    authenticated: true,
+                    user: JSON.parse(storedUser)
+                });
+            }
         };
         loadAuthState();
     }, []);

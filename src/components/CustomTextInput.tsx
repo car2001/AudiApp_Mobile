@@ -15,7 +15,7 @@ type CustomTextInputProps = {
 	required?: boolean;
 	editable?: boolean;
 	errors?: FieldError;
-	onChangeText: (...event: any[]) => void;
+	onChangeText?: (...event: any[]) => void;
 	secureTextEntry?: boolean;
 	styleInput?: StyleProp<TextStyle>;
 	styleContainer?: object;
@@ -28,7 +28,7 @@ const CustomTextInput = ({
 	required = false,
 	editable= true,
 	errors,
-	onChangeText,
+	onChangeText = () => {},
 	secureTextEntry = false,
 	styleInput,
 	styleContainer,
@@ -56,29 +56,38 @@ const CustomTextInput = ({
 					style={[styles.label, {color: labelColor}]} 
 					required={required}
 				/>
-			) : null}
+			) : null
+		}
 		{!secureTextEntry ? (
 			<TextInput
-			value={value || ""}
-			onChangeText={onChangeText}
-			placeholder={placeholder}
-			editable={editable}
-			// onKeyPress={handleKeyPress}
-			// keyboardType="numeric"
-			secureTextEntry={secureTextEntry}
-			style={[
-				{
-					borderColor: errors ? errorColor: borderInputColor
-				},
-				editable ? styleInput: styles.disabledInput, 
-				styleInput]}
+				value={value || ""}
+				onChangeText={onChangeText}
+				placeholder={placeholder}
+				editable={editable}
+				// onKeyPress={handleKeyPress}
+				// keyboardType="numeric"
+				secureTextEntry={secureTextEntry}
+				style={[
+					{
+						borderColor: errors ? errorColor: borderInputColor
+					},
+					editable ? styleInput: styles.disabledInput, 
+					styleInput
+				]}
 			/>
 		): (
 			<PasswordInput
 				value={value || ""}
 				onChangeText={onChangeText}
+				editable={editable}
 				placeholder={placeholder}
-				style={[{borderColor: errors ? errorColor: borderInputColor}, styleInput]}
+				style={[
+					{
+						borderColor: errors ? errorColor: borderInputColor
+					},
+					editable ? styleInput: styles.disabledInput,
+					styleInput
+				]}
 			/>
 		)}
 		{!!errors?.message && (

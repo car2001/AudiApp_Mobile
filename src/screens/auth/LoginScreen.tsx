@@ -7,6 +7,7 @@ import SignInForm from '@/src/components/forms/auth/SignInForm';
 import { LoginUsuarioRequest } from "@/src/types/auth";
 import Message from '@/src/components/Message';
 import { useAuth } from '@/src/context/AuthContext';
+import { handleError } from '@/src/utils/errorHandler';
 
 export default function LoginScreen() {
 
@@ -15,33 +16,20 @@ export default function LoginScreen() {
     const [isError, setIsError] = useState(false);
 
     const handleLogin = async (credentials: LoginUsuarioRequest): Promise<boolean> => {
-        let isSuccesLogin = false;
-        try
-        {
+        try {
             const oResponse = await onLogin(credentials);
-            if(oResponse?.data){
-                const {isSuccess} = oResponse.data;
-                if (isSuccess) {
-                    isSuccesLogin = isSuccess
-                    router.navigate("/home")   
-                }
+            
+            if (oResponse?.data?.isSuccess) {
+                router.navigate("/home");
+                return true;
             }
-        }
-        catch(exception: any)
-        {
-            const errorMessage =
-            exception instanceof Error
-                ? exception.message
-                : typeof exception === "string"
-                ? exception
-                : "Error desconocido. Inténtalo de nuevo.";
-            setMessage(errorMessage)
+        } catch (exception: unknown) {
+            const errorMessage = handleError(exception);
+            setMessage(errorMessage);
             setIsError(true);
-            setTimeout(() => {
-                setMessage("");
-            },5000)
+            setTimeout(() => setMessage(""), 5000);
         }
-        return isSuccesLogin;
+        return false;
     };
 
     return (
@@ -77,5 +65,7 @@ const styles = StyleSheet.create({
     containerLogin: {
         flex: 1,
         marginHorizontal:15,
+        width:"90%",
+        maxWidth:400
     }
 });

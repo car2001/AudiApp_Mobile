@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
-    paddingHorizontal: 50
+    alignSelf:"center"
   },
   forgotPasswordText: {
     color: "#4CABEB",
