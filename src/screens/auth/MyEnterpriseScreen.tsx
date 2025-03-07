@@ -7,6 +7,7 @@ import enterpriseService from "@/src/services/enterprise/enterprise";
 import Message from "@/src/components/Message";
 import { SunatConnectionRequest } from "@/src/types/enterprise";
 import { handleError } from "@/src/utils/errorHandler";
+import { SaveEnterpriseRequest } from "@/src/types/enterprise";
 
 
 export default function MyEnterpriseScreen(){
@@ -28,9 +29,12 @@ export default function MyEnterpriseScreen(){
         {
             const response = await enterpriseService.validateSunatAccess({access,token});
             if(response?.data?.isSuccesLogin){
-                const {data: {isSuccesLogin, razonSocial }} = response;
+                const {data: {isSuccesLogin, razonSocial }, message} = response;
                 setRazonSocial(razonSocial);
                 setIsValidConnection(isSuccesLogin);
+                setIsError(false);
+                setMessage(message)
+                setTimeout(() => setMessage(""), 5000);
             }
         }
         catch(exception: any)
@@ -38,9 +42,35 @@ export default function MyEnterpriseScreen(){
             const errorMessage = handleError(exception);
             setMessage(errorMessage);
             setIsError(true);
-            // setTimeout(() => setMessage(""), 5000);
+            setTimeout(() => setMessage(""), 5000);
         }
-    }
+    };
+
+    const handleSaveEnterprise = async({
+        enterprise, 
+        token
+    }: {
+        enterprise:SaveEnterpriseRequest, 
+        token:string
+    }) => {
+
+        try 
+        {
+            const response = await enterpriseService.saveEnterprise({enterprise, token});
+            const {message, data: {}} = response;
+            setIsError(false);
+            setMessage(message)
+            setTimeout(() => setMessage(""), 5000);
+        } 
+        catch(exception: any) 
+        {
+            const errorMessage = handleError(exception);
+            setMessage(errorMessage);
+            setIsError(true);
+            setTimeout(() => setMessage(""), 5000);
+        }
+
+    };
 
     return(
         <ScrollView style={styles.screen}>
@@ -54,6 +84,7 @@ export default function MyEnterpriseScreen(){
                     handleValidateAccess={handleValidateAccess}
                     razonSocial={razonSocial}
                     isValidConnection={isValidConnection}
+                    handleSaveEnterprise={handleSaveEnterprise}
                 />
             </View>
         </ScrollView>

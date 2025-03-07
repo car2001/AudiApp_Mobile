@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
+
 import { useAuth } from '../context/AuthContext';
 
 const CustomDrawer = (props: any) => {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   drawerItemsContainer: {
     flex: 1,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#fff',
     paddingTop: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

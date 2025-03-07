@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -12,30 +12,36 @@ import CustomButton from "../CustomButton";
 import Label from "../Label";
 import { EnterpriseSchema, enterpiseSchema } from "@/src/lib/forms/enterpriseSchema";
 import { SunatSchema, sunatSchema } from "@/src/lib/forms/sunatSchema"; 
-import { SunatConnectionRequest } from "@/src/types/enterprise";
+import { SunatConnectionRequest, SaveEnterpriseRequest } from "@/src/types/enterprise";
 import { useAuth } from "@/src/context/AuthContext";
 
 interface EnterpriseFormProps {
     handleValidateAccess: ({access, token}: {access:SunatConnectionRequest; token:string;}) => Promise<void>;
     razonSocial: string;
     isValidConnection: boolean;
+    handleSaveEnterprise: ({enterprise, token}: {enterprise:SaveEnterpriseRequest, token:string}) => Promise<void>;
 }
 
-export default function EnterpriseForm({handleValidateAccess, razonSocial, isValidConnection}: EnterpriseFormProps){
+export default function EnterpriseForm({handleValidateAccess, razonSocial, isValidConnection, handleSaveEnterprise}: EnterpriseFormProps){
 
     const { authState } = useAuth();
     const token = authState.token || "";
     const [isLoadingSave, setIsLoadingSave] = useState(false);
     const [isLoadingValidate, setIsLoadingValidate] = useState(false);
-    const [declarations, setDeclarations] = useState<string[]>([]);
+
+    const enterpriseDefaultValues = {
+        primera_notificacion_vencimiento: "3"
+    };
 
     const {
         control, 
         handleSubmit, 
-        reset, 
+        reset,
+        getValues,
         formState: {errors}
     } = useForm<EnterpriseSchema>({
-        resolver: zodResolver(enterpiseSchema)
+        resolver: zodResolver(enterpiseSchema),
+        defaultValues: enterpriseDefaultValues
     });
 
     const {
@@ -47,14 +53,28 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
         resolver: zodResolver(sunatSchema)
     });
 
-    const onSaveEmpresa = async () => {
+    const onSaveEmpresa = async (data: EnterpriseSchema) => {
         setIsLoadingSave(true);
+        const enterprise: SaveEnterpriseRequest = {
+            ...data,
+            razonSocial,
+            PrimeraNotificacionVencimiento: Number(data.primera_notificacion_vencimiento),
+            SegundaNotificacionVencimiento: Number(data.segunda_notificacion_vencimiento),
+            DiaDespuesVencimiento: Number(data.dia_despues_vencimiento),
+        }
+        await handleSaveEnterprise({enterprise, token})
         setIsLoadingSave(false);
     }
 
     const onValidateSUNAT = async (access: SunatSchema) => {
         setIsLoadingValidate(true);
         await handleValidateAccess({access:access, token});
+        const sunatValues = {
+            usuarioSunat: access.usuarioSunat,
+            claveSunat: access.claveSunat,
+            ruc: access.ruc,
+        };
+        reset(sunatValues);
         setIsLoadingValidate(false);
     };
 
@@ -106,6 +126,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                             <CustomTextInput
                                 editable={!isValidConnection}
                                 label="RUC"
+                                keyboardType="numeric"
                                 value={value}
                                 onChangeText={onChange}
                                 required={true}
@@ -140,6 +161,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                         <CustomTextInput 
                             label="Correo Electrónico"
                             value={value}
+                            keyboardType="email-address"
                             onChangeText={onChange}
                             required={true}
                             errors={errors.email}
@@ -151,13 +173,34 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                 <Text style={styles.subtitle}>
                     Seleccionar Declaraciones a Monitorear
                 </Text>
-                <CheckBox
+                {/* <CheckBox
                     options={[
                         {label: "PLANILLA ELECTRÓNICA", value: "PLANILLA ELECTRÓNICA"},
                         {label: "PDT IGV-RENTA MENSUAL-IEV", value: "PDT IGV-RENTA MENSUAL-IEV"}
                     ]}
                     checkedValues={declarations}
                     onChange={setDeclarations}
+                /> */}
+                <Controller
+                    control={control}
+                    name="declaraciones"
+                    render={({ field: { onChange, value } }) => (
+                        <View>
+                            <CheckBox
+                                options={[
+                                    { label: "PLANILLA ELECTRÓNICA", value: "601" },
+                                    { label: "PDT IGV-RENTA MENSUAL-IEV", value: "621" }
+                                ]}
+                                checkedValues={value || []}
+                                onChange={onChange}
+                            />
+                            {errors.declaraciones && (
+                                <Text style={{ color: 'red', marginTop: 5 }}>
+                                    {errors.declaraciones.message}
+                                </Text>
+                            )}
+                        </View>
+                    )}
                 />
             </View>
             {/* Set up notifications of declarations */}
@@ -176,6 +219,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                             render={({field:{onChange,value}}) => (
                                 <CustomTextInput
                                     value={value}
+                                    keyboardType="numeric"
                                     onChangeText={onChange}
                                     placeholder="Nro. de días"
                                     errors={errors.primera_notificacion_vencimiento}
@@ -195,6 +239,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                             render={({field:{onChange, value}}) => (
                                 <CustomTextInput
                                     value={value}
+                                    keyboardType="numeric"
                                     onChangeText={onChange}
                                     placeholder="Nro. de días"
                                     errors={errors.segunda_notificacion_vencimiento}
@@ -214,6 +259,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                             render={({field:{onChange,value}})=> (
                                 <CustomTextInput
                                     value={value}
+                                    keyboardType="numeric"
                                     onChangeText={onChange}
                                     placeholder="Nro. de días"
                                     errors={errors.dia_despues_vencimiento}

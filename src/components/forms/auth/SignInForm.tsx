@@ -45,6 +45,7 @@ const  SignInForm = ({ handleLogin }: LoginFormProps) => {
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
             label="DNI"
+            keyboardType="numeric"
             required
             value={value}
             errors={errors?.dni}

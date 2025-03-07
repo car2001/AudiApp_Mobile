@@ -1,5 +1,5 @@
 import { FieldError } from "react-hook-form";
-import { StyleSheet, StyleProp, TextStyle } from "react-native";
+import { StyleSheet, StyleProp, TextStyle, KeyboardTypeOptions } from "react-native";
 
 import { View, TextInput, Text, TextError } from "./Themed"
 import PasswordInput from "./PasswordInput";
@@ -19,6 +19,7 @@ type CustomTextInputProps = {
 	secureTextEntry?: boolean;
 	styleInput?: StyleProp<TextStyle>;
 	styleContainer?: object;
+	keyboardType?: KeyboardTypeOptions | undefined
 }
 
 const CustomTextInput = ({
@@ -32,6 +33,7 @@ const CustomTextInput = ({
 	secureTextEntry = false,
 	styleInput,
 	styleContainer,
+	keyboardType = "default"
 }: CustomTextInputProps) => {
 
   const theme = useColorScheme() ?? 'light';
@@ -40,12 +42,11 @@ const CustomTextInput = ({
   const labelColor = Colors[theme]["labelColor"];
 
   
-//   const handleChange = (text: string) => {
-//     // Validación: solo permitir números y el punto decimal
-//     if (/^\d*\.?\d*$/.test(text)) {
-//       onChangeText(text);  // Llama a onChange de React Hook Form
-//     }
-//   };
+  const handleChange = (text: string) => {
+    if (/^\d*\.?\d*$/.test(text)) {
+      onChangeText(text);
+    }
+  };
 
   return(
 	<View style={[styles.container, styleContainer]}>
@@ -61,11 +62,12 @@ const CustomTextInput = ({
 		{!secureTextEntry ? (
 			<TextInput
 				value={value || ""}
-				onChangeText={onChangeText}
+				onChangeText={
+					keyboardType === "numeric" ? handleChange: onChangeText
+				}
 				placeholder={placeholder}
 				editable={editable}
-				// onKeyPress={handleKeyPress}
-				// keyboardType="numeric"
+				keyboardType={keyboardType}
 				secureTextEntry={secureTextEntry}
 				style={[
 					{

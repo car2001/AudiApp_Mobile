@@ -9,9 +9,10 @@ import { useColorScheme } from '@/src/components/useColorScheme';
 import CustomDrawer from '@/src/components/CustomDrawer';
 import UserProfileHeader from '@/src/components/UserProfileHeader';
 import { useAuth } from '@/src/context/AuthContext';
+import useEmpresaStore from '@/src/stores/EnterpriseStore';
 
-export default function Layout() {
-
+const DrawerNavigation = () => {
+    
   const { authState } = useAuth();
   const authenticated = authState?.authenticated;
   const userStored = authState?.user;
@@ -19,39 +20,56 @@ export default function Layout() {
   const drawerActiveBackgroungColor = Colors[theme]["drawerActiveBackgroungColor"];
   const drawerInactiveTintColor = Colors[theme]["drawerInactiveTintColor"];
   const drawerActiveTintColor = Colors[theme]["drawerActiveTintColor"];
+  
+  return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Drawer
+          screenOptions={{
+            drawerType: Platform.OS === "web" ? "permanent" : "slide",
+            headerShown: true,
+            drawerActiveBackgroundColor: drawerActiveBackgroungColor,
+            drawerActiveTintColor: drawerActiveTintColor,
+            drawerInactiveTintColor: drawerInactiveTintColor,
+            headerRight: () => <UserProfileHeader />,
+          }}
+          drawerContent={props => <CustomDrawer {...props}/>}
+        >
+          <Drawer.Screen
+            name="home"
+            options={{
+              drawerLabel: 'Home',
+              title: 'Home',
+              drawerIcon: ({ size, color }) => (
+                <Ionicons name="home" size={size} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="settings"
+            options={{
+              drawerLabel: 'Settings',
+              title: 'Settings',
+            }}
+          />
+        </Drawer>
+      </GestureHandlerRootView>
+    );
+}
 
-  return !authenticated ? <Redirect href="/" /> :
-  (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer
-        screenOptions={{
-          drawerType: Platform.OS === "web" ? "permanent" : "slide",
-          headerShown: true,
-          drawerActiveBackgroundColor: drawerActiveBackgroungColor,
-          drawerActiveTintColor: drawerActiveTintColor,
-          drawerInactiveTintColor: drawerInactiveTintColor,
-          headerRight: () => <UserProfileHeader />,
-        }}
-        drawerContent={props => <CustomDrawer {...props}/>}
-      >
-        <Drawer.Screen
-          name="home"
-          options={{
-            drawerLabel: 'Home',
-            title: 'Home',
-            drawerIcon: ({ size, color }) => (
-              <Ionicons name="home" size={size} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="settings"
-          options={{
-            drawerLabel: 'Settings',
-            title: 'Settings',
-          }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
-  );
+export default function Layout() {
+
+  const { authState } = useAuth();
+  const authenticated = authState?.authenticated;
+  const userStored = authState?.user;
+  const { hasEnterprise } = useEmpresaStore();
+
+  return (
+    !authenticated 
+      ? <Redirect href="/" /> 
+      : 
+      (
+        !hasEnterprise ? <Redirect href="/MiEmpresa" /> :
+        <DrawerNavigation />
+      )
+  )
 }

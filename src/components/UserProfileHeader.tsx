@@ -8,9 +8,9 @@ import { useAuth } from "../context/AuthContext";
 
 export default function UserProfileHeader() {
 
-  const { onLogout } = useAuth();
+  const { onLogout, authState } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
-  const [usuario, setUsuario] = useState("Juan Pérez"); // Aquí puedes obtener el nombre del usuario dinámicamente
+  const user = `${authState.user?.nombre} ${authState.user?.apellidos}` || "";
 
   const handleLogout = async () => {
     await onLogout();
@@ -55,7 +55,7 @@ export default function UserProfileHeader() {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {/* Nombre del usuario dentro del modal */}
-            <Text style={styles.modalTitle}>Hola, {usuario}!</Text>
+            <Text style={styles.modalTitle}>Hola, {user}!</Text>
 
             {/* Opciones dentro del modal */}
             <ScrollView style={styles.optionsContainer}>
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#5964E8",
+    textAlign:"center"
   },
   optionsContainer: {
     width: "100%",

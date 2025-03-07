@@ -88,6 +88,7 @@ export default function SignUpForm ({ handleRegister }: SignUpFormProps ) {
         render={({field:{onChange, value}})=> (
           <CustomTextInput 
             label="DNI (Usuario de Acceso)"
+            keyboardType="numeric"
             value={value}
             required={true}
             errors={errors?.dni}

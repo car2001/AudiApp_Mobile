@@ -4,6 +4,7 @@ import loginService from "../services/auth/login";
 import { CreateUsuarioRequest, LoginUsuarioRequest } from "../types/auth";
 import { setItem, getItem, removeItem } from "../utils/storage";
 import { UsuarioResponse } from "../types/user";
+import useEmpresaStore from "../stores/EnterpriseStore";
 
 type AuthStateType = {
     token: string | null;
@@ -36,20 +37,25 @@ export const AuthProvider = ({children}: any) => {
         user: null
     });
 
+    const { setHasEnterprise } = useEmpresaStore();
+
     useEffect(() => {
         const loadAuthState = async () => {
             const storedToken = await getItem("authToken");
             const storedUser = await getItem("user");
+            const storedHasEnterprise = await getItem("hasEnterprise");
             if (storedToken && storedUser) {
                 setAuthState({
                     token: storedToken,
                     authenticated: true,
-                    user: JSON.parse(storedUser)
+                    user: JSON.parse(storedUser),
                 });
+                
+                setHasEnterprise(storedHasEnterprise === "true");
             }
         };
         loadAuthState();
-    }, []);
+    }, [setHasEnterprise]);
 
     const register= async(usuario: CreateUsuarioRequest) => {
         const responseRegister =  await registerService.register(usuario);
@@ -68,7 +74,11 @@ export const AuthProvider = ({children}: any) => {
     };
 
     const login = async (credentials: LoginUsuarioRequest) => {
+        
         const response = await loginService.login(credentials);
+
+        setHasEnterprise(response.data.hasEnterprise);
+
         setAuthState({
             token: response.data.token,
             authenticated: response.data.isSuccess,
@@ -84,10 +94,14 @@ export const AuthProvider = ({children}: any) => {
     const logout = async () => {
         // await SecureStore.deleteItemAsync("authToken");
         await removeItem("authToken");
+        await removeItem("user");
+
+        setHasEnterprise(false);
+        
         setAuthState({
             token: null,
             authenticated: false,
-            user: null
+            user: null,
         })
     }
 
