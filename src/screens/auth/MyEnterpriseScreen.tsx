@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet } from "react-native";
+import { router } from "expo-router";
 
 import { ScrollView, View } from "@/src/components/Themed";
 import EnterpriseForm from "@/src/components/forms/EnterpriseForm";
@@ -8,6 +9,7 @@ import Message from "@/src/components/Message";
 import { SunatConnectionRequest } from "@/src/types/enterprise";
 import { handleError } from "@/src/utils/errorHandler";
 import { SaveEnterpriseRequest } from "@/src/types/enterprise";
+import useEmpresaStore from "@/src/stores/EnterpriseStore";
 
 
 export default function MyEnterpriseScreen(){
@@ -16,6 +18,7 @@ export default function MyEnterpriseScreen(){
     const [isError, setIsError] = useState(false);
     const [razonSocial, setRazonSocial] = useState("");
     const [isValidConnection, setIsValidConnection] = useState(false);
+    const { setHasEnterprise } = useEmpresaStore();
 
     const handleValidateAccess = async({
         access, 
@@ -57,10 +60,12 @@ export default function MyEnterpriseScreen(){
         try 
         {
             const response = await enterpriseService.saveEnterprise({enterprise, token});
-            const {message, data: {}} = response;
+            const {message, data: {hasEnterprise}} = response;
+            setHasEnterprise(hasEnterprise);
             setIsError(false);
             setMessage(message)
-            setTimeout(() => setMessage(""), 5000);
+            setTimeout(() => setMessage(""), 3000);
+            router.navigate("/monitor")
         } 
         catch(exception: any) 
         {

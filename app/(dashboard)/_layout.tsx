@@ -3,6 +3,7 @@ import { Drawer } from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import { Redirect } from 'expo-router';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import Colors from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/components/useColorScheme';
@@ -45,10 +46,13 @@ const DrawerNavigation = () => {
             }}
           />
           <Drawer.Screen
-            name="settings"
+            name="monitor"
             options={{
-              drawerLabel: 'Settings',
-              title: 'Settings',
+              drawerLabel: 'Monitor',
+              title: 'Monitor',
+              drawerIcon: ({ size, color }) => (
+                <AntDesign name="dashboard" size={size} color={color} />
+              ),
             }}
           />
         </Drawer>

@@ -4,7 +4,8 @@ import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react";
 
-import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
+// import { SignInSchema, signInSchema } from "@/src/lib/forms/signinValidationSchema";
+import { SignInSchema, signInSchema} from "@/src/lib/forms/signInValidationSchema";
 import { LoginUsuarioRequest } from "@/src/types/auth";
 import { View, Text } from "../../Themed";
 import MainStyles from "@/src/styles/styles";

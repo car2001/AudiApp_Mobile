@@ -1,9 +1,9 @@
 import { View, Text } from "@/src/components/Themed";
 
-export default function Settings() {
+export default function Monitor() {
     return(
         <View>
-            <Text>Hola</Text>
+            <Text>Monitor</Text>
         </View>
     )
 }
