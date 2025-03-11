@@ -65,7 +65,7 @@ export default function MyEnterpriseScreen(){
             setIsError(false);
             setMessage(message)
             setTimeout(() => setMessage(""), 3000);
-            router.navigate("/monitor")
+            router.navigate("/MiMonitor")
         } 
         catch(exception: any) 
         {
@@ -79,7 +79,7 @@ export default function MyEnterpriseScreen(){
 
     return(
         <ScrollView style={styles.screen}>
-            <View style={styles.containerLogin}>
+            <View style={styles.container}>
                 <Message 
                     message={message} 
                     isError={isError} 
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
     },
-    containerLogin: {
+    container: {
         width: "90%",
         maxWidth: 800,
         flex: 1, 

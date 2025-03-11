@@ -22,7 +22,12 @@ interface EnterpriseFormProps {
     handleSaveEnterprise: ({enterprise, token}: {enterprise:SaveEnterpriseRequest, token:string}) => Promise<void>;
 }
 
-export default function EnterpriseForm({handleValidateAccess, razonSocial, isValidConnection, handleSaveEnterprise}: EnterpriseFormProps){
+export default function EnterpriseForm({
+    handleValidateAccess, 
+    razonSocial, 
+    isValidConnection, 
+    handleSaveEnterprise
+}: EnterpriseFormProps){
 
     const { authState } = useAuth();
     const token = authState.token || "";
@@ -195,7 +200,7 @@ export default function EnterpriseForm({handleValidateAccess, razonSocial, isVal
                                 onChange={onChange}
                             />
                             {errors.declaraciones && (
-                                <Text style={{ color: 'red', marginTop: 5 }}>
+                                <Text style={{ color: '#f35369', marginTop: 5 }}>
                                     {errors.declaraciones.message}
                                 </Text>
                             )}

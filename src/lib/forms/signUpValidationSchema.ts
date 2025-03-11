@@ -9,7 +9,8 @@ export const signUpScehema = z.object({
         .min(1, {message: "Los Apellidos son obligatorios"}),
     telefono: z
         .string({required_error: "El Teléfono es obligatorio"})
-        .min(1,{message: "El Teléfono es obligatorio"}),
+        .min(7, { message: "El Teléfono debe tener al menos 9 dígitos" })
+        .regex(/^\+?\d+$/, { message: "El Teléfono solo puede contener números y, opcionalmente, un '+' al inicio" }),
     dni: z
         .string({required_error: "El DNI es obligatorio"})
         .min(1,{message: "El DNI es obligatorio"})

@@ -37,13 +37,13 @@ export const AuthProvider = ({children}: any) => {
         user: null
     });
 
-    const { setHasEnterprise } = useEmpresaStore();
+    const { setHasEnterprise, hasEnterprise } = useEmpresaStore();
 
     useEffect(() => {
         const loadAuthState = async () => {
             const storedToken = await getItem("authToken");
             const storedUser = await getItem("user");
-            const storedHasEnterprise = await getItem("hasEnterprise");
+
             if (storedToken && storedUser) {
                 setAuthState({
                     token: storedToken,
@@ -51,7 +51,6 @@ export const AuthProvider = ({children}: any) => {
                     user: JSON.parse(storedUser),
                 });
                 
-                setHasEnterprise(storedHasEnterprise === "true");
             }
         };
         loadAuthState();
@@ -95,8 +94,8 @@ export const AuthProvider = ({children}: any) => {
         // await SecureStore.deleteItemAsync("authToken");
         await removeItem("authToken");
         await removeItem("user");
-
         setHasEnterprise(false);
+        useEmpresaStore.persist.clearStorage();
         
         setAuthState({
             token: null,

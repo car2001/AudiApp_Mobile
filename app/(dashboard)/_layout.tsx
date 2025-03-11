@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import { Redirect } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useMemo, useCallback } from 'react';
 
 import Colors from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/components/useColorScheme';
@@ -14,13 +15,15 @@ import useEmpresaStore from '@/src/stores/EnterpriseStore';
 
 const DrawerNavigation = () => {
     
-  const { authState } = useAuth();
-  const authenticated = authState?.authenticated;
-  const userStored = authState?.user;
   const theme = useColorScheme() ?? 'light';
-  const drawerActiveBackgroungColor = Colors[theme]["drawerActiveBackgroungColor"];
-  const drawerInactiveTintColor = Colors[theme]["drawerInactiveTintColor"];
-  const drawerActiveTintColor = Colors[theme]["drawerActiveTintColor"];
+
+  const drawerStylesTheme = useMemo( () => ({
+    drawerActiveBackgroungColor: Colors[theme]["drawerActiveBackgroungColor"],
+    drawerInactiveTintColor: Colors[theme]["drawerInactiveTintColor"],
+    drawerActiveTintColor: Colors[theme]["drawerActiveTintColor"]
+  }),[theme]);
+
+  const renderCustomDrawer = useCallback((props:any) => <CustomDrawer {...props} />, []);
   
   return (
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -28,12 +31,12 @@ const DrawerNavigation = () => {
           screenOptions={{
             drawerType: Platform.OS === "web" ? "permanent" : "slide",
             headerShown: true,
-            drawerActiveBackgroundColor: drawerActiveBackgroungColor,
-            drawerActiveTintColor: drawerActiveTintColor,
-            drawerInactiveTintColor: drawerInactiveTintColor,
+            drawerActiveBackgroundColor: drawerStylesTheme.drawerActiveBackgroungColor,
+            drawerActiveTintColor: drawerStylesTheme.drawerActiveTintColor,
+            drawerInactiveTintColor: drawerStylesTheme.drawerInactiveTintColor,
             headerRight: () => <UserProfileHeader />,
           }}
-          drawerContent={props => <CustomDrawer {...props}/>}
+          drawerContent={renderCustomDrawer}
         >
           <Drawer.Screen
             name="home"
@@ -46,10 +49,10 @@ const DrawerNavigation = () => {
             }}
           />
           <Drawer.Screen
-            name="monitor"
+            name="MiMonitor"
             options={{
-              drawerLabel: 'Monitor',
-              title: 'Monitor',
+              drawerLabel: 'Mi Monitor',
+              title: 'Mi Monitor',
               drawerIcon: ({ size, color }) => (
                 <AntDesign name="dashboard" size={size} color={color} />
               ),
