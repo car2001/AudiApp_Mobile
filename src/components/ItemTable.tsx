@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent"
     },
     cell: { 
-        flex: 1, 
+        flex: 1,
+        minWidth:100,
         padding: 10, 
         textAlign: "center" 
     }

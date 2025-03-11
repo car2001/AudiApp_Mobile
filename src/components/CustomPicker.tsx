@@ -21,6 +21,7 @@ export default function CustomPicker({
     
     const theme = useColorScheme() ?? 'light';
     const labelColor = Colors[theme]["labelColor"];
+    const borderInputColor = Colors[theme]["borderInputColor"];
     const [selectedEmpresa, setSelectedEmpresa] = useState("java");
 
     return (
@@ -37,13 +38,20 @@ export default function CustomPicker({
             <Picker
                 selectedValue={selectedEmpresa}
                 onValueChange={(itemValue) => setSelectedEmpresa(itemValue)}
-                style={styles.picker}
+                style={[styles.picker, {borderColor: borderInputColor}]}
             >
                 <Picker.Item label="Java" value="java" />
                 <Picker.Item label="Python" value="python" />
                 <Picker.Item label="JavaScript" value="javascript" />
             </Picker>
         </View>
+        				// style={[
+                        //     {
+                        //         borderColor: errors ? errorColor: borderInputColor
+                        //     },
+                        //     editable ? styleInput: styles.disabledInput, 
+                        //     styleInput
+                        // ]}
     );
 }
 
@@ -57,7 +65,6 @@ const styles = StyleSheet.create({
         backgroundColor:"transparent"
     },
     picker: {
-        borderColor: "transparent",
         borderWidth: 1,
         borderRadius: 8,
         paddingVertical: 8,
@@ -69,6 +76,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
+        marginBottom: 0,
+        padding: 12,
     },
     label: {
         position: "absolute",

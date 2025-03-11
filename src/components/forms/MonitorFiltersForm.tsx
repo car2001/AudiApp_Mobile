@@ -33,6 +33,5 @@ export default function MonitorFiltersForm() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
     }
 })
