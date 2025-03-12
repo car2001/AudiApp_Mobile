@@ -29,7 +29,7 @@ const DrawerNavigation = () => {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Drawer
           screenOptions={{
-            drawerType: Platform.OS === "web" ? "permanent" : "slide",
+            drawerType: Platform.OS === "web" ? "slide" : "slide",
             headerShown: true,
             drawerActiveBackgroundColor: drawerStylesTheme.drawerActiveBackgroungColor,
             drawerActiveTintColor: drawerStylesTheme.drawerActiveTintColor,

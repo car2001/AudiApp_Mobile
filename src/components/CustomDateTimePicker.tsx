@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Button, Platform } from 'react-native';
+import { Platform } from 'react-native';
+import DatePicker from 'react-native-modern-datepicker';
 
 import { View, TextInput } from './Themed';
 
@@ -22,14 +22,26 @@ const CustomDateTimePicker = () => {
           onFocus={() => setShow(true)}
         />
         {show && (
-          <DateTimePicker
-            value={date}
-            mode="datetime"
-            display="default"
-            onChange={onChange}
-          />
+          <View style={{width: "10%", height: "50%"}}>
+            <DatePicker
+              options={{
+                backgroundColor: '#090C08',
+                textHeaderColor: '#FFA25B',
+                padding: 0,
+                textDefaultColor: '#F6E7C1',
+                selectedTextColor: '#fff',
+                mainColor: '#F4722B',
+                textSecondaryColor: '#D6C7A1',
+                borderColor: 'rgba(122, 146, 165, 0.1)',
+              }}
+              
+              style={{borderRadius: 10}}
+              mode="monthYear"
+              selectorStartingYear={2000}
+              onMonthYearChange={selectedDate => setDate(selectedDate)}
+            />
+          </View>
         )}
-        <Button title="Confirmar" onPress={() => {/* Lógica para confirmar la fecha y hora */}} />
       </View>
     );
   };
