@@ -5,8 +5,6 @@ import { View, Text } from "../Themed"
 import CustomPicker from "../CustomPicker"
 import CustomButton from "../CustomButton"
 import MainStyles from "@/src/styles/styles"
-import { DatePickerInput } from "react-native-paper-dates";
-import CustomDateTimePicker from "../CustomDateTimePicker"
 
 export default function MonitorFiltersForm() {
     const [date, setDate] = useState(undefined);
@@ -21,7 +19,6 @@ export default function MonitorFiltersForm() {
                 required={true}
             />
             <View style={styles.container}>
-                <CustomDateTimePicker />
             </View>
             <CustomButton
                 text="Actualizar"
